@@ -1,5 +1,55 @@
 .tg{
     border-color: inherit;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
+}
+
+table{
+    width: 50%;
+}
+
+table, th, td{
+    font-size: 18px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+.table{
+    border: 3px solid black;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tg{
+    font-size: 28px;
+    text-align: center;
+    vertical-align: center;
+    border-bottom: 2px solid black;
+    background-color: rgb(218, 218, 218);
+}
+
+.tg-2{
+    text-align: center;
+}
+
+.search{
+    font-size: 20px;
+    border: 2px solid black;
+    display: block;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 20%;
+}
+
+.none-search{
+    text-align: center;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
 }
