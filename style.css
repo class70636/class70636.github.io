@@ -28,18 +28,32 @@ table, th, td {
     width: 40%;
 }
 
+.search {
+    font-size: 18px;
+    border: 2px solid black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    padding-left: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 89%;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 @media screen and (min-width:900px){
     table, th, td {
         font-size: 20px;
     }
     .table{
-        width: 70%;
+        width: 50%;
     }
     .co2{
         width: 30%;
     }
     .search{
-        width: 40%;
+        width: 50%;
     }
 }
 
@@ -53,20 +67,6 @@ table, th, td {
 
 .tg-2 {
     text-align: center;
-}
-
-.search {
-    font-size: 18px;
-    border: 2px solid black;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-    padding-left: 15px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    width: 70%;
-    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .none-search {
