@@ -9,23 +9,39 @@ table {
 }
 
 table, th, td {
-    font-size: 18px;
+    font-size: 15px;
     border: 1px solid black;
     border-collapse: collapse;
     padding: 10px;
 }
 
 .table {
-    border-radius: 30px;
     border: 3px solid black;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 95%;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.co2{
+    width: 35%;
+}
+
+@media screen and (min-width:900px){
+    table, th, td {
+        font-size: 20px;
+    }
+    .table{
+        width: 70%;
+    }
+    .co2{
+        width: 30%;
+    }
 }
 
 .tg {
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     vertical-align: center;
     border-bottom: 2px solid black;
