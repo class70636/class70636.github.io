@@ -23,11 +23,11 @@ table, th, td{
 }
 
 .tg{
-    font-size: 28px;
+    font-size: 22px;
     text-align: center;
     vertical-align: center;
     border-bottom: 2px solid black;
-    background-color: rgb(218, 218, 218);
+    background-color: #f1f1f1;
 }
 
 .tg-2{
@@ -35,21 +35,54 @@ table, th, td{
 }
 
 .search{
-    font-size: 20px;
+    font-size: 18px;
     border: 2px solid black;
     display: block;
-    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    width: 20%;
+    margin-top: 30px;
+    padding-left: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 400px;
 }
 
 .none-search{
     text-align: center;
-    font-size: 25px;
+    font-size: 16px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.top-header{
+    width: 400px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.author{
+    text-align: right;
+    font-size: 9px;
+}
+
+.table tr:hover{
+    background-color: #f1f1f1;
+}
+
+.bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -999;
+}
+
+.bg img{
+    min-height: 100%;
+    width: 100%;
+    -webkit-filter: opacity(0.5);
 }

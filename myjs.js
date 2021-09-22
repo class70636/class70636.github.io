@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         if(count == 0){
             table.css("display","none");
-            $('.none-search').css("display","display");
+            $('.none-search').css("display","");
         }
         else $('.none-search').css("display","none");
     });
