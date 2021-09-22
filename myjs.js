@@ -1,12 +1,13 @@
 $(document).ready(function () {
+
     $('#filterName').keyup(function () {
         var input = $('.light-table-filter').val();
         var table = $('.table');
         var tr = $('tr');
 
-        if(input.length == 0)
-            table.css("display","none");
-        else table.css("display","");
+        if (input.length == 0)
+            table.css("display", "none");
+        else table.css("display", "");
 
         var count = 0;
 
@@ -14,7 +15,7 @@ $(document).ready(function () {
             var td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 var txtValue = td.textContent || td.innerText;
-                if (txtValue.indexOf(input) > -1){
+                if (txtValue.indexOf(input) > -1) {
                     tr[i].style.display = "";
                     count++;
                 }
@@ -23,11 +24,11 @@ $(document).ready(function () {
             }
         }
 
-        if(count == 0){
-            table.css("display","none");
-            $('.none-search').css("display","");
+        if (count == 0) {
+            table.css("display", "none");
+            $('.none-search').css("display", "");
         }
-        else $('.none-search').css("display","none");
+        else $('.none-search').css("display", "none");
     });
 });
 
