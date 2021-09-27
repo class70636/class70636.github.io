@@ -165,8 +165,10 @@ p {
 }
 
 .guwan-title {
+    font-size: 18px;
     text-align: center;
     vertical-align: middle;
+    width: 5%;
 }
 
 /*.guwan>tbody>tr>td:first-child {
@@ -253,6 +255,9 @@ td:nth-child(1), th:nth-child(1) {
         font-size: 18px;
     }
     .buco1 {
+        width: auto;
+    }
+    .guwan-title{
         width: auto;
     }
 }
