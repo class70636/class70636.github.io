@@ -21,48 +21,67 @@ table, th, td {
     margin-left: auto;
     margin-right: auto;
     width: 95%;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
-.co2{
+p {
+    line-height: 20px;
+}
+
+.co2 {
     width: 47%;
 }
 
 .search {
     font-size: 18px;
     border: 2px solid black;
+    border-radius: 5px;
     display: block;
-    margin-left: auto;
+    /*margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 0;*/
     padding-left: 15px;
     padding-top: 25px;
     padding-bottom: 25px;
-    width: 89%;
+    width: 100%;
     background-color: rgba(255, 255, 255, 0.7);
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+    outline: none;
 }
 
-@media screen and (min-width:900px){
-    table, th, td {
-        font-size: 20px;
-    }
-    .table{
-        width: 50%;
-    }
-    .co2{
-        width: 30%;
-    }
-    .search{
-        width: 50%;
-    }
+.searchType {
+    font-weight: bold;
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: rgba(255, 255, 255, .5);
+}
+
+.searchType:hover {
+    cursor: pointer;
+    background-color: rgba(220, 220, 220, 0.5);
+}
+
+.searchType:active {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.searchContainer {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tg {
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     vertical-align: center;
     border-bottom: 2px solid black;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .tg-2 {
@@ -93,7 +112,7 @@ table, th, td {
 }
 
 .table tr:hover {
-    background-color: rgba(255,255,255,0.7)
+    background-color: rgba(255, 255, 255, 0.7)
 }
 
 .bg {
@@ -141,8 +160,96 @@ table, th, td {
     vertical-align: middle;
 }
 
-a{
-    color: black;
-    text-decoration: none;
+.row-headers-background {
+    display: none;
+}
+
+.guwan-title {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*.guwan>tbody>tr>td:first-child {
+    text-align: center;
+    vertical-align: middle;
+    -webkit-writing-mode: vertical-lr;
+    writing-mode: vertical-lr;
+    letter-spacing: 5px;
+}*/
+
+dl {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+dd {
+    margin-left: 1em;
+}
+
+dt {
     font-weight: bold;
+}
+
+.guwan>tbody>tr>td:first-child {
+    text-align: center;
+    vertical-align: middle;
+    -webkit-writing-mode: vertical-lr;
+    writing-mode: vertical-lr;
+    letter-spacing: 5px;
+}
+
+.guwan-con-des {
+    font-size: 14px;
+}
+
+.buqhai-title {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.buqhai>tbody>tr>td:first-child {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.buco1 {
+    width: 35%;
+}
+
+td:nth-child(1), th:nth-child(1) {
+    border-right: 2px solid black;
+}
+
+@media screen and (min-width:900px) {
+    table, th, td {
+        font-size: 22px;
+    }
+    .table {
+        width: 50%;
+    }
+    .co2 {
+        width: 30%;
+    }
+    .search {
+        width: 100%;
+    }
+    .searchContainer {
+        width: 50%;
+    }
+    .tg {
+        font-size: 24px;
+    }
+    .guwan>tbody>tr>td:first-child {
+        text-align: center;
+        vertical-align: middle;
+        -webkit-writing-mode: horizontal-tb;
+        writing-mode: horizontal-tb;
+        letter-spacing: 0;
+    }
+    .guwan-con-des {
+        font-size: 18px;
+    }
+    .buco1 {
+        width: auto;
+    }
 }
