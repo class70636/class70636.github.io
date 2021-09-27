@@ -193,10 +193,11 @@ dt {
 .guwan>tbody>tr>td:first-child {
     text-align: center;
     vertical-align: middle;
-    writing-mode: vertical-lr;
-    -webkit-writing-mode: vertical-lr;
-    -ms-writing-mode: vertical-lr;
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: vertical-rl;
     text-transform: full-width;
+    text-orientation: upleft;
     letter-spacing: 5px;
 }
 
