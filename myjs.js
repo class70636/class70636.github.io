@@ -1,11 +1,13 @@
 $(document).ready(function () {
 
+    // document.getElementById('reportBg').innerHTML = '<object type="text/html" data="report.html"></object>';
+
     var input;
 
     var tempTrs = [];
     var counts = [0, 0, 0];
 
-    var stb = $('.searchType');
+    var stb = $('#searchType');
     var type = parseInt(stb.data("search"));
 
     function searchAll() {
@@ -126,17 +128,26 @@ $(document).ready(function () {
 
     //0:全部 1:古玩 2:捕快
     var types = ['全部', '答題', '古玩', '捕快斷案'];
-    var typeAttr = ['輸入關鍵字','輸入題目關鍵字','輸入古玩關鍵字','輸入捕快案名關鍵字'];
+    var typeAttr = ['輸入關鍵字', '輸入題目關鍵字', '輸入古玩關鍵字', '輸入捕快案名關鍵字'];
 
-    $('.searchType').click(function () {
+    $('#searchButton').click(function () {
         type = parseInt($(this).data("search"));
 
-        stb.data('search', type = (type + 1) % 4);
+        stb.data('search', type = (type + 1) % types.length);
         document.getElementById('searchButton').textContent = "搜尋範圍：" + types[type];
 
-        $('.search').attr('placeholder',typeAttr[type]);
+        $('.search').attr('placeholder', typeAttr[type]);
 
         sear();
+    });
+
+    $('.rpBtn').click(function () {
+        // $('#reportBg').css("display", "block");
+        window.open('report.html');
+    });
+
+    $(window).scroll(function () {
+        $('#reportBg').css("marginTop", ($(window).scrollTop() + 30) + "px");
     });
 });
 

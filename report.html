@@ -1,16 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="rp.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="rep.js">
+    </script>
+    <title>天涯明月刀M答題器－回報區</title>
 </head>
+
 <body>
-    <form action="https://script.google.com/macros/s/AKfycbz8tHDta1XZBUCFAZWGGYnlVJfNIqiQW_piwJLXmPvbrN3VDqPLccEqjb3hsvPIivvh/exec" method="GET">
-        題目：<input type="text" name="topic"></br>
-        答案：<input type="text" name="answer">
-        <input type="submit" value="送出">
+    <form
+        action="https://script.google.com/macros/s/AKfycbz8tHDta1XZBUCFAZWGGYnlVJfNIqiQW_piwJLXmPvbrN3VDqPLccEqjb3hsvPIivvh/exec"
+        method="GET">
+        <div class="topContainer">
+            <h2 style="text-align: center;">天涯明月刀M答題器－回報區</h2>
+            <div class="notice">
+                <p>請先閱讀以下幾點：</p>
+                <ol>
+                    <li>此頁看起來很陽春是因為我懶所以沒有設計啦！</li>
+                    <li><p style="color: red; font-weight: bold;">題目一定要填；答案可填可不填。</p></li>
+                    <li>若是要訂正答案，答案可填淺顯易懂的訂正方式（例：鑑真>鑒真）；若不知道訂正答案可填＂此題錯誤＂之類的。</li>
+                    <li><p>請不要濫用阿～雖然不會造成我電腦的負擔，但是整理起來會很困擾阿拜託🙏</p></li>
+                </ol>
+            </div>
+            <div class="inputContainer">
+                <div class="botContainer">
+                    <input type="text" name="topic" class="input" placeholder="輸入題目" required="required"
+                        autocomplete="off"></br>
+                    <input type="text" name="answer" class="input" placeholder="輸入答案(如不知可填空)" autocomplete="off">
+                    <input type="button" class="plus" value="新增項目">
+                </div>
+            </div>
+            <div class="btnContainer">
+                <input type="submit" value="送出">
+            </div>
+        </div>
     </form>
 </body>
+
 </html>

@@ -225,6 +225,38 @@ td:nth-child(1), th:nth-child(1) {
     border-right: 2px solid black;
 }
 
+.rpBg{
+    display: none;
+    position: absolute;
+    width: 40%;
+    /*top: 5%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    padding: 16px;*/
+    /* border: 3px solid black; */
+    border-radius: 10px;
+    background-color: rgba(255,255,255,.5);
+    z-index: 5001;
+    overflow: auto;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.insidePage{
+    width: 100%;
+}
+
+.rpBtn{
+    color: blue;
+    font-weight: bold;
+}
+
+.rpBtn:hover{
+    cursor: pointer;
+}
+
 @media screen and (min-width:900px) {
     table, th, td {
         font-size: 22px;
