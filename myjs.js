@@ -7,7 +7,7 @@ $(document).ready(function () {
     var tempTrs = [];
     var counts = [0, 0, 0];
 
-    var stb = $('#searchType');
+    var stb = $('.searchType');
     var type = parseInt(stb.data("search"));
 
     function searchAll() {
@@ -130,7 +130,7 @@ $(document).ready(function () {
     var types = ['全部', '答題', '古玩', '捕快斷案'];
     var typeAttr = ['輸入關鍵字', '輸入題目關鍵字', '輸入古玩關鍵字', '輸入捕快案名關鍵字'];
 
-    $('#searchButton').click(function () {
+    $('.searchType').click(function () {
         type = parseInt($(this).data("search"));
 
         stb.data('search', type = (type + 1) % types.length);
