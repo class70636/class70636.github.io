@@ -1,3 +1,64 @@
+.loading {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.loading .mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(37, 37, 37);
+    opacity: 0.5;
+}
+
+div#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#container {
+    width: 200px;
+    height: 200px;
+}
+
+@keyframes animation {
+    0% {
+        stroke-dasharray: 1 98;
+        stroke-dashoffset: -105;
+    }
+    50% {
+        stroke-dasharray: 80 10;
+        stroke-dashoffset: -160;
+    }
+    100% {
+        stroke-dasharray: 1 98;
+        stroke-dashoffset: -300;
+    }
+}
+
+#spinner {
+    transform-origin: center;
+    animation-name: animation;
+    animation-duration: 1.2s;
+    animation-timing-function: cubic-bezier;
+    animation-iteration-count: infinite;
+}
+
+.loading-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
 .tg {
     border-color: inherit;
     text-align: left;
@@ -5,6 +66,7 @@
 }
 
 table {
+    position: relative;
     width: 50%;
 }
 
@@ -85,7 +147,7 @@ p {
 }
 
 .tg-2 {
-    text-align: center;
+    /* text-align: center; */
 }
 
 .none-search {
@@ -225,7 +287,7 @@ td:nth-child(1), th:nth-child(1) {
     border-right: 2px solid black;
 }
 
-.rpBg{
+.rpBg {
     display: none;
     position: absolute;
     width: 40%;
@@ -236,25 +298,29 @@ td:nth-child(1), th:nth-child(1) {
     padding: 16px;*/
     /* border: 3px solid black; */
     border-radius: 10px;
-    background-color: rgba(255,255,255,.5);
+    background-color: rgba(255, 255, 255, .5);
     z-index: 5001;
     overflow: auto;
-
     margin-left: auto;
     margin-right: auto;
 }
 
-.insidePage{
+.insidePage {
     width: 100%;
 }
 
-.rpBtn{
+.rpBtn {
     color: blue;
     font-weight: bold;
 }
 
-.rpBtn:hover{
+.rpBtn:hover {
     cursor: pointer;
+}
+
+.qId {
+    font-size: 6px;
+    color: grey;
 }
 
 @media screen and (min-width:900px) {
@@ -289,7 +355,7 @@ td:nth-child(1), th:nth-child(1) {
     .buco1 {
         width: auto;
     }
-    .guwan-title{
+    .guwan-title {
         width: auto;
     }
 }

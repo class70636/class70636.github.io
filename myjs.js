@@ -1,6 +1,38 @@
 $(document).ready(function () {
 
-    // document.getElementById('reportBg').innerHTML = '<object type="text/html" data="report.html"></object>';
+    $.ajax({
+        type: 'get',
+        url: 'https://script.google.com/macros/s/AKfycbyiZeCCuyKTXQJXL3QiRcc7h0Ph6DfwFK4RtCi06zhGJ420f51-yxv1_9pcV35kFY9t4w/exec',
+        success: function (rp) {
+            var response = JSON.parse(rp);
+
+            var ques = response[0];
+            var guwan = response[1];
+            var buqhai = response[2];
+            //讀取答題
+            let text = '<tr><th class="tg co1">題目</th><th class="tg co2">答案</th></tr>';
+            for (var i = 1; i < ques.length; i++) {
+                text += '<tr><td class="tg-1">' + ques[i][0] + '</td><td class="tg-2">' + ques[i][1] + "</td></tr>";
+            }
+            document.getElementsByClassName('ques')[0].innerHTML = text;
+
+            //讀取古玩
+            let text2 = "";
+            for (var i = 1; i < guwan.length; i++) {
+                text2 += "<tr><td>" + guwan[i][0] + "</td><td>" + guwan[i][1] + "</td></tr>";
+            }
+            document.getElementsByClassName('guwan-body')[0].innerHTML = text2;
+
+            //讀取捕快
+            let text3 = ""
+            for (var i = 1; i < buqhai.length; i++) {
+                text3 += "<tr><td>" + buqhai[i][0] + "</td><td>" + buqhai[i][1] + "</td></tr>";
+            }
+            document.getElementsByClassName('buqhai-body')[0].innerHTML = text3;
+
+            $('.loading').css("display","none");
+        }
+    });
 
     var input;
 
