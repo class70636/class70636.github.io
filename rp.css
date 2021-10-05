@@ -53,6 +53,12 @@ li {
     margin-left: -14px;
 }
 
+a{
+    text-decoration: none;
+    font-weight: bold;
+    color: blue;
+}
+
 @media screen and (min-width:900px) {
     .botContainer {
         width: 50%;
