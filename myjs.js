@@ -11,10 +11,12 @@ $(document).ready(function () {
             var tp = response[2]
             var guwan = response[3];
             var buqhai = response[4];
+
+            var icon = '<i class="material-icons" title="複製答案">content_copy</i>';
             //讀取答題
             let text = '<tr><th class="tg co1">題目</th><th class="tg co2">答案</th></tr>';
             for (var i = 1; i < ques.length; i++)
-                text += '<tr class="qq"><td class="tg-1">' + ques[i][0] + '</td><td class="tg-2">' + ques[i][1] + "</td></tr>";
+                text += '<tr class="qq"><td class="tg-1">' + ques[i][0] + '</td><td class="tg-2">' + ques[i][1] + icon + "</td></tr>";
             for (var i = 1; i < koi.length; i++)
                 text += '<tr class="ko"><td class="tg-1">' + koi[i][0] + '</td><td class="tg-2">' + koi[i][1] + "</td></tr>";
             for (var i = 1; i < tp.length; i++)
@@ -36,6 +38,16 @@ $(document).ready(function () {
             document.getElementsByClassName('buqhai-body')[0].innerHTML = text3;
 
             $('.loading').css("display", "none");
+
+            $('.table').on('click', '.material-icons', function () {
+                var parent = $(this).parent();
+                var str = parent.html().replace(icon, '');
+                navigator.clipboard.writeText(str);
+
+                var copied = $('.copied');
+                copied.css("opacity", 1);
+                copied.animate({ opacity: 1 }, 1000).animate({ opacity: 0 }, 300);
+            });
         }
     });
 
@@ -149,6 +161,10 @@ $(document).ready(function () {
     $('.rpBtn').click(function () {
         // $('#reportBg').css("display", "block");
         window.open('report.html');
+    });
+
+    $('.table > .copy-btn').click(function () {
+        console.log($(this));
     });
 });
 

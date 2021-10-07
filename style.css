@@ -65,16 +65,23 @@ div#container {
     font-weight: bold;
 }
 
+.material-icons {
+    cursor: pointer;
+    float: right;
+    font-size: 19px;
+}
+
 table {
     position: relative;
     width: 50%;
+    vertical-align: middle;
 }
 
 table, th, td {
     font-size: 15px;
     border: 1px solid black;
     border-collapse: collapse;
-    padding: 10px;
+    padding: 10px 5px 10px 10px;
 }
 
 .table {
@@ -146,10 +153,6 @@ p {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.tg-2 {
-    /* text-align: center; */
-}
-
 .none-search {
     text-align: center;
     font-size: 16px;
@@ -168,7 +171,7 @@ p {
 
 .author {
     text-align: right;
-    font-size: 9px;
+    font-size: 8px;
     padding-right: 10px;
     padding-top: 5px;
 }
@@ -220,6 +223,26 @@ p {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     vertical-align: middle;
+}
+
+.copied {
+    font-weight: bold;
+    font-size: 18px;
+    color: #008040;
+    text-align: center;
+    letter-spacing: 5px;
+    position: fixed;
+    z-index: 4999;
+    /* border: 1px solid orange; */
+    border-radius: 5px;
+    width: 85%;
+    top: 90%;
+    right: 0;
+    left: 0;
+    margin: auto;
+    padding: 5px 0 5px 0;
+    background-color: #cccccc;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.75), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
 .row-headers-background {
@@ -357,5 +380,13 @@ td:nth-child(1), th:nth-child(1) {
     }
     .guwan-title {
         width: auto;
+    }
+    .material-icons {
+        float: right;
+        font-size: 26px;
+    }
+    .copied {
+        font-size: 24px;
+        width: 25%;
     }
 }
