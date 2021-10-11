@@ -161,7 +161,9 @@ $(document).ready(function () {
     $('#serType').change(function () {
         type = parseInt($(this).val());
         $('.search').attr('placeholder', typeAttr[type]);
-        sear();
+
+        if ($(this).val().length != 0)
+            sear();
     });
 
     $('.rpBtn').click(function () {
