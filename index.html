@@ -16,26 +16,6 @@
 </head>
 
 <body>
-    <div class="loading">
-        <div class="mask"></div>
-        <div id="container">
-            <div class="loading-title">讀取中.. 燒等</div>
-            <svg viewBox="0 0 100 100">
-                <defs>
-                    <filter id="shadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" />
-                    </filter>
-                </defs>
-                <circle id="spinner"
-                    style="fill:transparent;stroke:#ffffff;stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);"
-                    cx="50" cy="50" r="45" />
-            </svg>
-        </div>
-    </div>
-    <div class="copied" style="opacity: 0;">複製成功！</div>
-    <div class="bg">
-        <img class="bg-img" src="w120-1920x1024.jpg">
-    </div>
     <div class="container">
         <div class="author">
             <span>由S3唐呼蘆N創</span></br>
@@ -51,7 +31,15 @@
                 </p>
             </div>
             <div class="searchContainer">
-                <span id="searchButton" class="searchType" data-search="0">搜尋範圍：所有</span>
+                <!-- <span id="searchButton" class="searchType" data-search="0">搜尋範圍：所有</span> -->
+                <select id="serType" class="searchType">
+                    <option value="0" selected>搜尋範圍：所有</option>
+                    <option value="1">搜尋範圍：答題（雅士、飲聚）</option>
+                    <option value="2">搜尋範圍：答題（茶話會）</option>
+                    <option value="3">搜尋範圍：答題（錦鯉）</option>
+                    <option value="4">搜尋範圍：古玩</option>
+                    <option value="5">搜尋範圍：捕快斷案</option>
+                </select>
                 <input type="text" id="filterName" class="light-table-filter search" placeholder="輸入關鍵字">
             </div>
 
@@ -84,6 +72,27 @@
             <p class="none-search" style="display: none;">查無資料鴨😅 <span class="rpBtn">點我回報</span></p>
 
         </div>
+    </div>
+    <div class="loading">
+        <div class="mask"></div>
+        <div id="container">
+            <div class="loading-title">讀取中.. 燒等</div>
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <filter id="shadow">
+                        <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" />
+                    </filter>
+                </defs>
+                <circle id="spinner"
+                    style="fill:transparent;stroke:#ffffff;stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);"
+                    cx="50" cy="50" r="45" />
+            </svg>
+        </div>
+    </div>
+    <div class="copied" style="opacity: 0;">複製成功！</div>
+    <i class="material-icons gotop">arrow_upward</i>
+    <div class="bg">
+        <img class="bg-img" src="w120-1920x1024.jpg">
     </div>
 </body>
 

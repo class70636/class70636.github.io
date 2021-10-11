@@ -12,7 +12,7 @@ $(document).ready(function () {
             var guwan = response[3];
             var buqhai = response[4];
 
-            var icon = '<i class="material-icons" title="複製答案">content_copy</i>';
+            var icon = '<i class="material-icons copyBtn" title="複製答案">content_copy</i>';
             //讀取答題
             let text = '<tr><th class="tg co1">題目</th><th class="tg co2">答案</th></tr>';
             for (var i = 1; i < ques.length; i++)
@@ -39,7 +39,7 @@ $(document).ready(function () {
 
             $('.loading').css("display", "none");
 
-            $('.table').on('click', '.material-icons', function () {
+            $('.table').on('click', '.copyBtn', function () {
                 var parent = $(this).parent();
                 var str = parent.html().replace(icon, '');
                 navigator.clipboard.writeText(str);
@@ -56,8 +56,8 @@ $(document).ready(function () {
     var tempTrs = [];
     var counts = [0, 0, 0, 0, 0];
 
-    var stb = $('.searchType');
-    var type = parseInt(stb.data("search"));
+    var stb = $('#serType');
+    var type = parseInt(stb.val());
 
     function searchAll() {
         counts[0] = search('.qq');
@@ -147,14 +147,20 @@ $(document).ready(function () {
     var types = ['全部', '答題（雅士、飲聚）', '答題（茶話會）', '答題（錦鯉）', '古玩', '捕快斷案'];
     var typeAttr = ['輸入關鍵字', '輸入題目關鍵字', '輸入題目關鍵字', '輸入題目關鍵字', '輸入古玩關鍵字', '輸入捕快案名關鍵字'];
 
-    $('.searchType').click(function () {
-        type = parseInt($(this).data("search"));
+    // $('.searchType').click(function () {
+    //     type = parseInt($(this).data("search"));
 
-        stb.data('search', type = (type + 1) % types.length);
-        document.getElementById('searchButton').textContent = "搜尋範圍：" + types[type];
+    //     stb.data('search', type = (type + 1) % types.length);
+    //     document.getElementById('searchButton').textContent = "搜尋範圍：" + types[type];
 
+    //     $('.search').attr('placeholder', typeAttr[type]);
+
+    //     sear();
+    // });
+
+    $('#serType').change(function () {
+        type = parseInt($(this).val());
         $('.search').attr('placeholder', typeAttr[type]);
-
         sear();
     });
 
@@ -165,6 +171,19 @@ $(document).ready(function () {
 
     $('.table > .copy-btn').click(function () {
         console.log($(this));
+    });
+
+    $(window).scroll(function () {
+        var input = document.getElementById('filterName');
+        var bot = input.getBoundingClientRect().bottom;
+
+        if (bot < 0)
+            $('.gotop').fadeIn();
+        else $('.gotop').fadeOut();
+    });
+
+    $('.gotop').click(function () {
+        $('html,body').animate({ scrollTop: 0 }, 'fast');
     });
 });
 
