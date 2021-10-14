@@ -55,7 +55,7 @@ $(document).ready(function () {
     });
 
     var input;
-    var inputs;
+    var inputs = [];
 
     var tempTrs = [];
     var counts = [0, 0, 0, 0, 0];
@@ -164,7 +164,7 @@ $(document).ready(function () {
         type = parseInt($(this).val());
         $('.search').attr('placeholder', typeAttr[type]);
 
-        if ($(this).val().length != 0)
+        if ($('#filterName').val().length != 0)
             sear();
     });
 
