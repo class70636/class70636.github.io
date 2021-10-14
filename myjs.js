@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    //背景圖片
-    var bgs = ['87', '94', '99', '103', '107', '108', '109', '110', '113', '115', '117', '120', '122'];
-    $('.bg-img').attr('src', 'w' + bgs[Math.round(Math.random() * bgs.length - 1)] + '-1920x1024.jpg')
-
     $.ajax({
         type: 'get',
         url: 'https://script.google.com/macros/s/AKfycbyiZeCCuyKTXQJXL3QiRcc7h0Ph6DfwFK4RtCi06zhGJ420f51-yxv1_9pcV35kFY9t4w/exec',
