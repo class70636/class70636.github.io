@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    //背景圖片
+    var bgs = ['87', '94', '99', '103', '107', '108', '109', '110', '113', '115', '117', '120', '122'];
+    $('.bg-img').attr('src', 'w' + bgs[Math.round(Math.random() * bgs.length - 1)] + '-1920x1024.jpg')
+
     $.ajax({
         type: 'get',
         url: 'https://script.google.com/macros/s/AKfycbyiZeCCuyKTXQJXL3QiRcc7h0Ph6DfwFK4RtCi06zhGJ420f51-yxv1_9pcV35kFY9t4w/exec',
@@ -12,9 +16,12 @@ $(document).ready(function () {
             var guwan = response[3];
             var buqhai = response[4];
 
+            var qId = 1;
+
             var icon = '<i class="material-icons copyBtn" title="複製答案">content_copy</i>';
             //讀取答題
             let text = '<tr><th class="tg co1">題目</th><th class="tg co2">答案</th></tr>';
+            // let qqId = '<span class="qqid">' + qId + '</span>';
             for (var i = 1; i < ques.length; i++)
                 text += '<tr class="qq"><td class="tg-1">' + ques[i][0] + '</td><td class="tg-2">' + ques[i][1] + icon + "</td></tr>";
             for (var i = 1; i < koi.length; i++)
@@ -52,6 +59,7 @@ $(document).ready(function () {
     });
 
     var input;
+    var inputs;
 
     var tempTrs = [];
     var counts = [0, 0, 0, 0, 0];
@@ -77,7 +85,7 @@ $(document).ready(function () {
             if (td) {
                 var txtValue = td.textContent || td.innerText;
                 txtValue = txtValue.replace("“", "").replace("”", "").replace("「", "").replace("」", "").replace("《", "").replace("》", "");
-                if (txtValue.indexOf(input) > -1) {
+                if (multiSearch(txtValue)) {
                     tr[i].style.display = "";
                     count++;
                 }
@@ -87,6 +95,13 @@ $(document).ready(function () {
         }
 
         return count;
+    }
+
+    function multiSearch(str) {
+        for (var i = 0; i < inputs.length; i++)
+            if (str.indexOf(inputs[i]) == -1)
+                return false;
+        return true;
     }
 
     $('#filterName').keyup(function () {
@@ -101,7 +116,10 @@ $(document).ready(function () {
 
         if (input.length == 0)
             table.css("display", "none");
-        else table.css("display", "");
+        else {
+            table.css("display", "");
+            inputs = input.split(' ');
+        }
 
         switch (type) {
             case 1:
@@ -143,20 +161,8 @@ $(document).ready(function () {
         else $('.none-search').css("display", "none");
     }
 
-    //0:全部 1:古玩 2:捕快
-    var types = ['全部', '答題（雅士、飲聚）', '答題（茶話會）', '答題（錦鯉）', '古玩', '捕快斷案'];
+    // var types = ['全部', '答題（雅士、飲聚）', '答題（茶話會）', '答題（錦鯉）', '古玩', '捕快斷案'];
     var typeAttr = ['輸入關鍵字', '輸入題目關鍵字', '輸入題目關鍵字', '輸入題目關鍵字', '輸入古玩關鍵字', '輸入捕快案名關鍵字'];
-
-    // $('.searchType').click(function () {
-    //     type = parseInt($(this).data("search"));
-
-    //     stb.data('search', type = (type + 1) % types.length);
-    //     document.getElementById('searchButton').textContent = "搜尋範圍：" + types[type];
-
-    //     $('.search').attr('placeholder', typeAttr[type]);
-
-    //     sear();
-    // });
 
     $('#serType').change(function () {
         type = parseInt($(this).val());
