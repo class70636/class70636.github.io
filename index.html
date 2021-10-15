@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-min.css">
+    <link rel="stylesheet" href="jquery-ui.min.css">
     <link rel="Shortcut Icon" type="image/x-icon" href="icon_grobot.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/33563289b8.js" crossorigin="anonymous"></script>
+    <script src="jquery-ui.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天涯明月刀M答題器-繁體版</title>
-
-    <script type="text/javascript" src="myjs.js">
+    <script type="text/javascript" src="myjs-min.js">
     </script>
 </head>
 
@@ -23,9 +25,10 @@
         </div>
         <div class="banner-box">
             <div class="banner-bg"></div>
-            <div class="top-header">
+            <div class="top-header" style="text-align: center;">
                 <h1>天涯明月刀M答題器</h1>
-                <p>目前統整範圍：逍遙(雅士)答題、幫派飲聚答題、茶話會、彩色錦鯉、古玩、捕快斷案</p>
+                <p>目前統整範圍：
+                    逍遙(雅士)答題、幫派飲聚答題、茶話會、彩色錦鯉、古玩、捕快斷案</p>
                 <p>
                     資料都是從多處統整的，無法一一檢查</br>可能會有缺題、錯誤答案請<span class="rpBtn">點我回報</span>
                 </p>
@@ -41,6 +44,12 @@
                     <option value="5">搜尋範圍：捕快斷案</option>
                 </select>
                 <input type="text" id="filterName" class="light-table-filter search" placeholder="輸入關鍵字">
+                <i class='fas fa-question-circle'
+                    style='font-size:20px; float: right; margin-top: -24px; margin-right: 5px;'></i>
+                <div id="dialog" title="搜尋技巧" style="display: none; background-color: rgba(255,255,255,.5);">
+                    <p>1. 盡量搜尋引號或括號內的字。</p>
+                    <p>2. 可使用空格進行多重關鍵字搜尋縮小範圍。(例如題目"下面不屬於唐代五大書法家的是"，可搜尋"唐 書法")。</p>
+                </div>
             </div>
 
             <table class="table ques" style="display: none;">
@@ -92,7 +101,7 @@
     <div class="copied" style="opacity: 0;">複製成功！</div>
     <i class="material-icons gotop" title="回到頂部">arrow_upward</i>
     <div class="bg">
-        <img class="bg-img" src="w109-1920x1024.jpg">
+        <img class="bg-img" src="w122-1920x1024.jpg">
     </div>
 </body>
 
