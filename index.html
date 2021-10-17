@@ -33,7 +33,7 @@
                     資料都是從多處統整的，無法一一檢查</br>可能會有缺題、錯誤答案請<span class="rpBtn">點我回報</span>
                 </p>
             </div>
-            <div class="searchContainer">
+            <div class="searchContainer" style="position: relative;">
                 <!-- <span id="searchButton" class="searchType" data-search="0">搜尋範圍：所有</span> -->
                 <select id="serType" class="searchType">
                     <option value="0" selected>搜尋範圍：所有</option>
@@ -43,12 +43,12 @@
                     <option value="4">搜尋範圍：古玩</option>
                     <option value="5">搜尋範圍：捕快斷案</option>
                 </select>
-                <input type="text" id="filterName" class="light-table-filter search" placeholder="輸入關鍵字">
-                <i class='fas fa-question-circle'
-                    style='font-size:20px; float: right; margin-top: -24px; margin-right: 5px;'></i>
+                <i class='fas fa-question-circle' style='font-size:20px; position: absolute; right: 0; bottom: 0; padding: 4px;'></i>
+                <input type="text" id="filterName" class="light-table-filter search" placeholder="輸入關鍵字" autofocus>
                 <div id="dialog" title="搜尋技巧" style="display: none; background-color: rgba(255,255,255,.5);">
                     <p>1. 盡量搜尋引號或括號內的字。</p>
-                    <p>2. 可使用空格進行多重關鍵字搜尋縮小範圍。(例如題目"下面不屬於唐代五大書法家的是"，可搜尋"唐 書法")。</p>
+                    <p>2. 可使用空格進行多重關鍵字搜尋縮小範圍(例如題目"下面不屬於唐代五大書法家的是"，可搜尋"唐 書法")。</p>
+                    <p>3. 使用手機務必在打完關鍵字後按下"完成"或"換行"。</p>
                 </div>
             </div>
 
@@ -101,7 +101,7 @@
     <div class="copied" style="opacity: 0;">複製成功！</div>
     <i class="material-icons gotop" title="回到頂部">arrow_upward</i>
     <div class="bg">
-        <img class="bg-img" src="w122-1920x1024.jpg">
+        <img class="bg-img" src="w107-1920x1024.jpg">
     </div>
 </body>
 
