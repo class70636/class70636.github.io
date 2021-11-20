@@ -22,12 +22,24 @@
 
 <body>
     <div>
-        <div class="container mx-auto mx-2 my-2 top-container position-relative">
-            <div class="text-wrap text-end mb-2 p-0" style="font-size: 8px;">
-                <span>由S3香菜狂魔N創</span></br>
+        <div class="container mx-auto mx-2 my-2 top-container position-relative pt-0">
+            <!-- <div class="text-wrap text-end mb-2 p-0" style="font-size: 8px;">
+                <span>由S3唐呼蘆N創</span></br>
                 <span>劍靈社會最大肚皮天涯刀最善良漂亮初一 小力協助</span>
+            </div> -->
+            <!-- <div class="text-wrap" style="background-color: #fff3cd;">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"
+                    style="color: #664d03;">
+                    <use xlink:href="#exclamation-triangle-fill" />
+                </svg>
+            </div> -->
+            <div id="notice-btn" class="btn btn-warning end-0 position-absolute p-1 mt-0" data-bs-toggle="modal"
+                data-bs-target="#notice-bar" style="border-top-right-radius: .25rem;">
+                <svg class="bi flex-shrink-0 m-0 p-0" width="24" height="24" role="img" aria-label="Warning:">
+                    <use xlink:href="#exclamation-triangle-fill" />
+                </svg>
             </div>
-            <div class="header text-center">
+            <div class="header text-center pt-3">
                 <h1>天涯明月刀M答題器</h1>
                 <p>目前統整範圍： 逍遙(雅士)答題、幫派飲聚答題、茶話會、彩色錦鯉、古玩、捕快斷案</p>
                 <p>資料都是從多處統整的，無法一一檢查</br>
@@ -157,6 +169,42 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="notice-bar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <h5 class="modal-title" id="exampleModalLabel">New message</h5> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form
+                        action="https://script.google.com/macros/s/AKfycbxSRC5XYSSSegE-kD9tb2UITjuGaKwrN1NB1hEzIIcdLLLP8VEq0w1jgv8tsANrlDI/exec"
+                        method="get">
+                        <!-- <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div> -->
+                        <div class="input-group mb-3">
+                            <p>
+                                作者(就是我本人)因為沒玩天刀M啦，所以答題器的題庫也即將停更了(但是網頁應該還會在，除非github倒了)。
+                            </p>
+                            <p>
+                                故再此徵求幾個對天刀M還有愛、有空閒時間的"義工"來整理題庫，有意者請在下方留下你的google帳號，如果有選到你會寄信給你請隨時注意信箱喔😘(如果都沒人應徵的話就沒辦法囉..)。
+                            </p>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="google帳號"
+                                aria-label="google帳號" aria-describedby="basic-addon2" required>
+                            <span class="input-group-text" id="basic-addon2">@gmail.com</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="return validate()">發送</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="bg">
         <img class="bg-img" src="w107-1920x1024.jpg">
     </div>
@@ -170,6 +218,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="bsjs-min.js"></script>
+    <script>
+        function validate() {
+            var agree = confirm("確定發送嗎？");
+            if (agree)
+                return true;
+            return false;
+        }
+    </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
