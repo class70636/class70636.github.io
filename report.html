@@ -1,58 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="rp.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="rep.js">
-    </script>
-    <title>天涯明月刀M答題器－回報區</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&family=Noto+Serif+TC:wght@500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        h1,
+        h2 {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        p,
+        a,
+        input,
+        label,
+        span,
+        select,
+        table,
+        ol,
+        button {
+            font-family: 'Noto Serif TC', serif;
+        }
+    </style>
+
+    <title>天涯明月刀M答題器-回報區</title>
 </head>
 
 <body>
-    <form
-        action="https://script.google.com/macros/s/AKfycbz8tHDta1XZBUCFAZWGGYnlVJfNIqiQW_piwJLXmPvbrN3VDqPLccEqjb3hsvPIivvh/exec"
-        method="GET">
-        <div class="topContainer">
-            <h2 style="text-align: center;">天涯明月刀M答題器－回報區</h2>
-            <div class="notice">
-                <p>請先閱讀以下幾點：</p>
+    <div class="fluid-container m-2">
+        <div class="container shadow p-1 pt-3 pb-3 bg-body rounded border">
+            <div class="top-header">
+                <h2 class="text-center">天涯明月刀M答題器-回報區</h2>
                 <ol>
-                    <li>此頁看起來很陽春是因為我懶所以沒有設計啦！</li>
-                    <li>
-                        <p style="color: red; font-weight: bold;">請先確認是否已擁有該題目(有些題目可能會有些許不一樣但其實是同個題目及答案；回報區也看一下)</p>
-                    </li>
-                    <li>
-                        <p style="color: red; font-weight: bold;">題目一定要填；答案可填可不填。</p>
-                    </li>
-                    <li>若是要訂正答案，請填訂正後答案；若不知道訂正答案可填＂此題錯誤＂之類的。</li>
-                    <li>
-                        <p>請不要濫用阿～雖然不會造成我電腦的負擔，但是整理起來會很困擾阿拜託🙏</p>
-                    </li>
-                    <li>
-                        <a
-                            href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRUIvTi647cqKEXodM4opr4mpuSaKQoOza6cFT6HNhBOyd0h-zWxs9CwraUIG7I3SbdmSw16VUsxiy-/pubhtml">點我查看回報進度（每５分鐘自動更新一次）</a>
+                    <li class="mb-1">請先確認是否已擁有該題目(有些題目可能會有些許不一樣但其實是同個題目及答案；回報區也看一下)</li>
+                    <li class="mb-1">題目一定要填；答案可填可不填。</li>
+                    <li class="mb-1">若是要訂正答案，請填訂正後答案；若不知道訂正答案可填＂此題錯誤＂之類的。</li>
+                    <li class="mb-1"><a
+                            href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRUIvTi647cqKEXodM4opr4mpuSaKQoOza6cFT6HNhBOyd0h-zWxs9CwraUIG7I3SbdmSw16VUsxiy-/pubhtml"
+                            class="text-primary fw-bold" style="text-decoration: none;">點我查看回報進度（每５分鐘自動更新一次）</a>
                     </li>
                 </ol>
             </div>
-            <div class="inputContainer">
-                <div class="botContainer">
-                    <input type="text" name="topic" class="input" placeholder="輸入題目" required="required"
-                        autocomplete="off"></br>
-                    <input type="text" name="answer" class="input" placeholder="輸入答案(如不知可填空)" autocomplete="off">
-                    <input class="typeBtn" type="button" value="回報類型：新增題目" data-type='0'>
-                    <input class="ttype" name="type" type="hidden" value="新增題目">
-                    <input type="button" class="plus" value="新增項目">
-                </div>
-            </div>
-            <div class="btnContainer">
-                <input type="submit" value="送出">
+            <div class="container">
+                <form
+                    action="https://script.google.com/macros/s/AKfycbz8tHDta1XZBUCFAZWGGYnlVJfNIqiQW_piwJLXmPvbrN3VDqPLccEqjb3hsvPIivvh/exec"
+                    method="GET">
+                    <div class="in-group">
+                        <div class="group border border-2 rounded mb-3 shadow">
+                            <div class="input-group p-2">
+                                <span class="input-group-text">題目</span>
+                                <input type="text" name="topic" class="form-control" placeholder="輸入題目"
+                                    autocomplete="off" required>
+                            </div>
+                            <div class="input-group p-2 pt-0">
+                                <span class="input-group-text">答案</span>
+                                <input type="text" name="answer" class="form-control" placeholder="輸入答案(不知可填空)"
+                                    autocomplete="off">
+                            </div>
+                            <div class="input-group p-2 pt-0">
+                                <label class="input-group-text">回報類型</label>
+                                <select name="type" class="form-select">
+                                    <option value="新增題目" selected>新增題目</option>
+                                    <option value="答案錯誤">答案錯誤</option>
+                                </select>
+                            </div>
+                            <div class="btn-group p-2 pt-0" role="group">
+                                <button type="button" class="btn btn-primary plus">新增項目</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 shadow">
+                        <input class="btn btn-success shadow-sm" type="submit" value="送出"
+                            onclick="return confirm('確定送出?')">
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- My script -->
+    <script>
+        $(document).ready(function () {
+            $('.plus').click(function () {
+                // var temp = $(this).parent().parent().first().clone(true);
+                var temp = $('.group:first-child').clone(true);
+                temp.find("input:text").val('');
+                temp.find(".btn-group").append('<button type="button" class="btn btn-danger del">刪除項目</button>');
+                temp.find('.del').on('click', function () {
+                    $(this).parent().parent().remove();
+                });
+                temp.appendTo('.in-group');
+            });
+        });
+    </script>
 </body>
 
 </html>
