@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <label>所有數字（逗號隔開）：</label></br>
+    <input id="allNumber" style="font-size: 20px;"></br></br>
+    <label>組合式（用 * 代表需要組合數）：</label></br>
+    <input id="reg" style="font-size: 20px;"></br>
+    <button id="submit">組合</button></br></br>
+    <label>所有組合：</label></br>
+    <select id="result" multiple size="25" style="font-size: 20px;width: 50%;">
+    </select>
+
+    <script>
+        $(document).ready(function () {
+            $('#result').empty();
+
+            function generateCombinations(numbers, combinaionSize) {
+                const combinations = [];
+                const tempCombination = [];
+
+                function backtrack(startIndex) {
+                    if (tempCombination.length == combinaionSize) {
+                        combinations.push(tempCombination.slice());
+                        return;
+                    }
+
+                    for (let i = startIndex; i < numbers.length; i++) {
+                        tempCombination.push(numbers[i]);
+                        backtrack(i + 1);
+                        tempCombination.pop();
+                    }
+                }
+
+                backtrack(0);
+                return combinations;
+            }
+
+            function replaceCombination(combination, str) {
+                let replacedStr = str;
+                let starIndex = replacedStr.indexOf('*');
+
+                for (let i = 0; i < combination.length; i++) {
+                    const numString = String(combination[i]);
+                    const paddedNum = numString.padStart(2,' ');
+                    replacedStr = replacedStr.slice(0, starIndex) + paddedNum + replacedStr.slice(starIndex + 1);
+                    starIndex = replacedStr.indexOf('*', starIndex + 1);
+                }
+
+                return "(" + replacedStr + ")";
+            }
+
+
+            $('#submit').click(function () {
+                //所有數字
+                var allNumber = $('#allNumber').val().split(',');
+                //組合式
+                var reg = $('#reg').val();
+
+                const combinaionSize = reg.split('*').length - 1;
+                const combinations = generateCombinations(allNumber, combinaionSize);
+
+                $('#result').empty();
+                combinations.forEach(combination => {
+                    const replacedStr = replaceCombination(combination, reg);
+                    $('#result').append('<option>' + replacedStr + '</option>')
+                })
+            });
+        });
+    </script>
+</body>
+
+</html>
