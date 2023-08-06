@@ -4,77 +4,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>數字組合</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .dis {
+            font-family: Consolas;
+        }
+
+        .cylin-div {
+            height: 350px;
+            /* 56px 是标签栏的高度，根据实际情况进行调整 */
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
-    <label>所有數字（逗號隔開）：</label></br>
-    <input id="allNumber" style="font-size: 20px;"></br></br>
-    <label>組合式（用 * 代表需要組合數）：</label></br>
-    <input id="reg" style="font-size: 20px;"></br>
-    <button id="submit">組合</button></br></br>
-    <label>所有組合：</label></br>
-    <select id="result" multiple size="25" style="font-size: 20px;width: 50%;">
-    </select>
 
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+            </div>
+            <div class="col-7">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                            aria-selected="true">數字組合</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                            aria-selected="false">數字組合(柱)</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        aria-labelledby="pills-home-tab">
+                        <div class="form-floating mb-3" style="width: 100%;">
+                            <input type="text" class="form-control dis" id="allNumber" placeholder="">
+                            <label for="allNumber">輸入數字(逗號隔開)</label>
+                        </div>
+                        <div class="form-floating mb-1" style="width: 100%;">
+                            <input type="text" class="form-control dis" id="reg" placeholder="">
+                            <label for="reg">組合式(用*代表需要組合數)</label>
+                        </div>
+                        <button type="button" type="submit" class="btn btn-dark mb-3" id="combi">組合</button>
+                        <button type="button" class="btn btn-danger mb-3" id="clear">清除</button>
+
+                        <select class="form-select dis" id="result-list" size="20" aria-label="size 20 select example">
+                        </select>
+                    </div>
+                    <!-- 柱 -->
+                    <div class="tab-pane fade tab-cylin-pane" id="pills-profile" role="tabpanel"
+                        aria-labelledby="pills-profile-tab">
+                        <div class="cylin-div">
+                            <table class="table table-borderless" id="cylin-table">
+                                <thead></thead>
+                                <tbody id="cylin-body">
+                                    <tr>
+                                        <td>
+                                            <div class="form-floating" style="width: 100%;">
+                                                <input type="text" class="form-control dis cy" placeholder="">
+                                                <label>第1柱(逗號隔開)</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-floating" style="width: 100%;">
+                                                <input type="text" class="form-control dis cy" placeholder="">
+                                                <label>第2柱(逗號隔開)</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary mb-1" type="button" onclick="addNewCylin()">新增一柱</button>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-10 p-0 pe-1">
+                                    <div class="d-grid">
+                                        <button class="btn btn-dark" type="button" onclick="combiCylin()">組合</button>
+                                    </div>
+                                </div>
+                                <div class="col-2 p-0">
+                                    <div class="d-grid">
+                                        <button class="btn btn-danger" type="button" onclick="clearCylin()">清除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <select class="form-select mt-1 dis" id="cylin-list" size="18">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#result').empty();
+        function generateCombinations(numbers, combinaionSize) {
+            const combinations = [];
+            const tempCombination = [];
 
-            function generateCombinations(numbers, combinaionSize) {
-                const combinations = [];
-                const tempCombination = [];
-
-                function backtrack(startIndex) {
-                    if (tempCombination.length == combinaionSize) {
-                        combinations.push(tempCombination.slice());
-                        return;
-                    }
-
-                    for (let i = startIndex; i < numbers.length; i++) {
-                        tempCombination.push(numbers[i]);
-                        backtrack(i + 1);
-                        tempCombination.pop();
-                    }
+            function backtrack(startIndex) {
+                if (tempCombination.length == combinaionSize) {
+                    combinations.push(tempCombination.slice());
+                    return;
                 }
 
-                backtrack(0);
-                return combinations;
-            }
-
-            function replaceCombination(combination, str) {
-                let replacedStr = str;
-                let starIndex = replacedStr.indexOf('*');
-
-                for (let i = 0; i < combination.length; i++) {
-                    const numString = String(combination[i]);
-                    const paddedNum = numString.padStart(2,' ');
-                    replacedStr = replacedStr.slice(0, starIndex) + paddedNum + replacedStr.slice(starIndex + 1);
-                    starIndex = replacedStr.indexOf('*', starIndex + 1);
+                for (let i = startIndex; i < numbers.length; i++) {
+                    tempCombination.push(numbers[i]);
+                    backtrack(i + 1);
+                    tempCombination.pop();
                 }
-
-                return "(" + replacedStr + ")";
             }
 
+            backtrack(0);
+            return combinations;
+        }
 
-            $('#submit').click(function () {
-                //所有數字
-                var allNumber = $('#allNumber').val().split(',');
-                //組合式
-                var reg = $('#reg').val();
+        function replaceCombination(combination, str) {
+            let replacedStr = str;
+            let starIndex = replacedStr.indexOf('*');
 
-                const combinaionSize = reg.split('*').length - 1;
-                const combinations = generateCombinations(allNumber, combinaionSize);
+            for (let i = 0; i < combination.length; i++) {
+                const numString = String(combination[i]);
+                const paddedNum = numString.padStart(2, ' ');
+                replacedStr = replacedStr.slice(0, starIndex) + paddedNum + replacedStr.slice(starIndex + 1);
+                starIndex = replacedStr.indexOf('*', starIndex + 1);
+            }
 
-                $('#result').empty();
-                combinations.forEach(combination => {
-                    const replacedStr = replaceCombination(combination, reg);
-                    $('#result').append('<option>' + replacedStr + '</option>')
-                })
-            });
+            return "(" + replacedStr + ")";
+        }
+
+        const combi = document.getElementById('combi');
+        combi.addEventListener('click', (event) => {
+            clearResultList();
+            const select = document.getElementById('result-list');
+
+            var allNumber = document.getElementById('allNumber').value;
+            var reg = document.getElementById('reg').value;
+
+            if (allNumber === '' || reg === '')
+                return;
+
+            const combinaionSize = reg.split('*').length - 1;
+            const combinations = generateCombinations(allNumber.split(','), combinaionSize);
+
+            combinations.forEach(combination => {
+                const replacedStr = replaceCombination(combination, reg);
+                const option = document.createElement('option');
+
+                option.innerHTML = replacedStr;
+                select.appendChild(option);
+            })
         });
+
+        function clearResultList() {
+            const select = document.getElementById('result-list');
+            var i, L = select.options.length - 1;
+            for (i = L; i >= 0; i--) {
+                select.remove(i);
+            }
+        }
+
+        const clearBtn = document.getElementById('clear');
+        clearBtn.addEventListener('click', () => {
+            clearResultList();
+            document.getElementById('allNumber').value = '';
+            document.getElementById('reg').value = '';
+        });
+
+        // 新增一柱
+        function addNewCylin() {
+            const tbody = document.getElementById('cylin-body');
+            let trs = document.querySelectorAll('#cylin-body tr');
+            let trs_length = trs.length;
+            const block = `
+                <tr>
+                    <td>
+                        <div class="form-floating position-relative" style="width: 100%;">
+                            <input type="text" class="form-control dis cy" placeholder>
+                            <label>第${++trs_length}柱(逗號隔開)</label>                            
+                            <div class="position-absolute top-50 end-0 translate-middle-y">
+                                <button type="button" class="btn" placeholder="刪除" onclick="deleteCylin(this);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += block;
+        }
+
+        //刪除按鈕
+        function deleteCylin(b) {
+            const tr = b.parentElement.parentElement.parentElement.parentElement;
+            tr.remove();
+
+            //取得所有柱
+            let trs = document.querySelectorAll('.cy');
+            let count = 1;
+            trs.forEach(tr => {
+                const parent = tr.parentElement;
+                const label = parent.querySelector('label');
+
+                label.innerHTML = `第${count++}柱(逗號隔開)`;
+            });
+        }
+
+        let cylin_combi = [];
+
+        //組合(柱)
+        function combiCylin() {
+            const select = document.getElementById('cylin-list');
+            //清空結果
+            var i, L = select.options.length - 1;
+            for (i = L; i >= 0; i--) {
+                select.remove(i);
+            }
+            cylin_combi = [];
+
+            const cylins = document.querySelectorAll('.cy');
+            const cylinLength = cylins.length;
+            let zones = [];
+            cylins.forEach(v => {
+                zones.push(v.value.split(','));
+            })
+
+            findAllCylinCombinations(zones);
+            cylin_combi.forEach(v => {
+                const option = document.createElement('option');
+                option.innerHTML = v;
+                select.appendChild(option);
+            })
+        }
+
+        function findAllCylinCombinations(zones, currentCombo = [], currentIndex = 0) {
+            // 如果已經遍歷到最後一個zone，則打印目前的組合
+            if (currentIndex === zones.length) {
+                const tempStr = currentCombo.join(',');
+                cylin_combi.push(`(${tempStr})`);
+                return;
+            }
+
+            // 取得當前zone的數字集合
+            const currentZone = zones[currentIndex];
+
+            // 對當前zone的每個數字進行遞迴組合
+            for (let i = 0; i < currentZone.length; i++) {
+                // 將當前zone的數字添加到組合中
+                currentCombo.push(currentZone[i]);
+
+                // 遞迴處理下一個zone
+                findAllCylinCombinations(zones, currentCombo, currentIndex + 1);
+
+                // 移除最後添加的數字，準備選擇下一個數字
+                currentCombo.pop();
+            }
+        }
+
+        function clearCylin() {
+            const select = document.getElementById('cylin-list');
+            //清空結果
+            var i, L = select.options.length - 1;
+            for (i = L; i >= 0; i--) {
+                select.remove(i);
+            }
+
+            const cylins = document.querySelectorAll('.cy');
+            cylins.forEach(v => {
+                v.value = '';
+            })
+        }
     </script>
 </body>
 
