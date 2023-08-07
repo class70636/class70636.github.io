@@ -196,6 +196,9 @@
             const tbody = document.getElementById('cylin-body');
             let trs = document.querySelectorAll('#cylin-body tr');
             let trs_length = trs.length;
+
+            const tempCys = document.querySelectorAll('.cy');
+
             const block = `
                 <tr>
                     <td>
@@ -214,6 +217,10 @@
                 </tr>
             `;
             tbody.innerHTML += block;
+
+            const cys = document.querySelectorAll('.cy');
+            for (let i = 0; i < tempCys.length; i++)
+                cys[i].value = tempCys[i].value;
         }
 
         //刪除按鈕
