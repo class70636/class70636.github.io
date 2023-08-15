@@ -261,11 +261,17 @@
             });
         }
 
-        let composite_numbers = [];
-        let composites = [];
+        let composite_numbers;
+        let composites;
+        let composites_count;
 
         //組合(柱)
         function combiCylin() {
+            //初始化
+            composite_numbers = [];
+            composites = [];
+            composites_count = [];
+            
             //取得所有柱
             const cylins = document.querySelectorAll('.cy');
             const cylinLength = cylins.length;
@@ -278,7 +284,6 @@
             }
 
             //合數
-            composite_numbers = [];
             for (let i = 2; i <= 6; i++) {
                 if (i > cylinLength) break;
                 composite_numbers.push(generateCompositeNumbers(cylins, i));
@@ -286,18 +291,27 @@
 
             composites = [];
             for (let i = 0; i < composite_numbers.length; i++) {
-                let temp = [];
+                let temp = '';
+                let count = 0;
 
                 const arr = composite_numbers[i];
                 for (let j = 0; j < arr.length; j++)
                     findAllCylinCombinations(arr[j]);
 
                 composites.push(temp);
+                composites_count.push(count);
 
                 function findAllCylinCombinations(zones, currentCombo = [], currentIndex = 0) {
                     if (currentIndex === zones.length) {
                         const tempStr = currentCombo.join(', ');
-                        temp.push(`(${tempStr})`);
+                        // temp.push(`(${tempStr})`);
+                        temp += `
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" type="checkbox" value="">
+                                (${tempStr})
+                            </label>
+                        `;
+                        count++;
                         return;
                     }
                     const currentZone = zones[currentIndex];
@@ -318,7 +332,7 @@
                     comp_count[i].innerHTML = 0;
                     continue;
                 }
-                comp_count[i].innerHTML = composites[i].length;
+                comp_count[i].innerHTML = composites_count[i];
             }
         }
 
@@ -367,18 +381,18 @@
 
             //取得組合
             let modal_body = document.getElementById('cylin-list');
-            modal_body.innerHTML = '';
-            const arr = composites[index];
+            modal_body.innerHTML = composites[index];
+            // const arr = composites[index];
 
-            arr.forEach(v => {
-                const li = `
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        ${v}
-                    </label>
-                `
-                modal_body.innerHTML += li;
-            });
+            // arr.forEach(v => {
+            //     const li = `
+            //         <label class="list-group-item">
+            //             <input class="form-check-input me-1" type="checkbox" value="">
+            //             ${v}
+            //         </label>
+            //     `
+            //     modal_body.innerHTML += li;
+            // });
 
             myModal.show();
         }
