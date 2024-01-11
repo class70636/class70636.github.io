@@ -51,7 +51,7 @@
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body text-center">
+                <div class="modal-body text-center" id="loadingModalBody">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     <span>讀取資料中...</span>
                 </div>
@@ -114,6 +114,10 @@
                 myModal.hide();
             }).catch(error => {
                 console.log(`Error: ${error}`);
+                const loadingModalBody = document.getElementById('loadingModalBody');
+                loadingModalBody.innerHTML = `
+                <i class="bi bi-arrow-clockwise text-danger"></i> 資料讀取失敗，請重新整理
+                `;
             });
 
             // console.log(LTDDatas);
