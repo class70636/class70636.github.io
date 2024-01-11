@@ -37,8 +37,7 @@
                     </div>
                     <div class="row">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-warning"
-                                onclick="checkHistoryOfSelf()">歷史紀錄組內檢查</button>
+                            <button type="button" class="btn btn-warning" onclick="checkHistoryOfSelf()">歷史紀錄統計</button>
                         </div>
                     </div>
                 </div>
@@ -342,19 +341,14 @@
             const repeatResult = document.getElementById('repeatResult');
             repeatResult.innerHTML = '';
 
-            // var temp_data = []; //紀錄每期分別重複4,5,6個數字的統計
-
-            // 計算重複
-            var counts = {
-                4: 0,
-                5: 0,
-                6: 0
-            };
-
-            var total_counts = 0;
-
+            var temp_data = []; //紀錄每期分別重複4,5,6個數字的統計
             for (let i = 0; i < LTDDatas.length; i++) {
-
+                // 計算重複
+                var counts = {
+                    4: 0,
+                    5: 0,
+                    6: 0
+                };
 
                 const arr1 = LTDDatas[i].drawNumberSize;
                 const uniqueNumbers1 = new Set(arr1);
@@ -369,15 +363,27 @@
 
                     if (commonCount >= 4 && commonCount <= 6) {
                         counts[commonCount]++;
-                        break;
                     }
+                }
+
+                temp_data.push(counts);
+            }
+
+            //所有期數的重複組數
+            var counts = {
+                4: 0,
+                5: 0,
+                6: 0
+            };
+            for (let i = 0; i < temp_data.length; i++) {
+                for (let j = 4; j <= 6; j++) {
+                    if (temp_data[i][j] > 0)
+                        counts[j]++;
                 }
             }
 
-            console.log(total_counts);            
-
             const resultTable = `
-            <label class="form-label">總抓取期數: ${LTDDatas.length}</label>
+            <label class="form-label">總抓取期數: ${temp_data.length}</label>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -390,17 +396,17 @@
                     <tr>
                         <td>4</td>
                         <td>${counts[4]}</td>
-                        <td>${((counts[4] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                        <td>${((counts[4] / temp_data.length) * 100).toFixed(2)} %</td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>${counts[5]}</td>
-                        <td>${((counts[5] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                        <td>${((counts[5] / temp_data.length) * 100).toFixed(2)} %</td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>${counts[6]}</td>
-                        <td>${((counts[6] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                        <td>${((counts[6] / temp_data.length) * 100).toFixed(2)} %</td>
                     </tr>
                 </tbody>
             </table>
