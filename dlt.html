@@ -22,17 +22,23 @@
                 <div class="container">
                     <div class="row">
                         <div class="mt-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">輸入需要檢查的號碼</label>
+                            <label for="checkNumbers" class="form-label">輸入需要檢查的號碼</label>
                             <textarea class="form-control" id="checkNumbers" rows="3"
                                 style="max-height: 500px; min-height: 300px;"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <button type="button" class="btn btn-primary" onclick="checkReapeatOfSelf()">組內檢查重複</button>
+                            <button type="button" class="btn btn-primary" onclick="checkReapeatOfSelf()">組內檢查</button>
                             <button type="button" class="btn btn-success"
-                                onclick="checkReapeatOfHistory()">與歷史紀錄檢查重複</button>
+                                onclick="checkReapeatOfHistory()">與歷史紀錄檢查</button>
                             <button type="button" class="btn btn-danger" onclick="removeSearching()">清除</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <button type="button" class="btn btn-warning"
+                                onclick="checkHistoryOfSelf()">歷史紀錄組內檢查</button>
                         </div>
                     </div>
                 </div>
@@ -330,6 +336,77 @@
                     }
                 }
             }
+        }
+
+        function checkHistoryOfSelf() {
+            const repeatResult = document.getElementById('repeatResult');
+            repeatResult.innerHTML = '';
+
+            // var temp_data = []; //紀錄每期分別重複4,5,6個數字的統計
+
+            // 計算重複
+            var counts = {
+                4: 0,
+                5: 0,
+                6: 0
+            };
+
+            var total_counts = 0;
+
+            for (let i = 0; i < LTDDatas.length; i++) {
+
+
+                const arr1 = LTDDatas[i].drawNumberSize;
+                const uniqueNumbers1 = new Set(arr1);
+
+                for (let j = 0; j < LTDDatas.length; j++) {
+                    if (i == j) continue;
+                    const arr2 = LTDDatas[j].drawNumberSize;
+                    const uniqueNumbers2 = new Set(arr2);
+
+                    var commonNumbers = [...uniqueNumbers1].filter(num => uniqueNumbers2.has(num));
+                    var commonCount = commonNumbers.length;
+
+                    if (commonCount >= 4 && commonCount <= 6) {
+                        counts[commonCount]++;
+                        break;
+                    }
+                }
+            }
+
+            console.log(total_counts);            
+
+            const resultTable = `
+            <label class="form-label">總抓取期數: ${LTDDatas.length}</label>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>重複幾個</td>
+                        <td>組數</td>
+                        <td>百分比</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>4</td>
+                        <td>${counts[4]}</td>
+                        <td>${((counts[4] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>${counts[5]}</td>
+                        <td>${((counts[5] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>${counts[6]}</td>
+                        <td>${((counts[6] / LTDDatas.length) * 100).toFixed(4)} %</td>
+                    </tr>
+                </tbody>
+            </table>
+            `;
+
+            repeatResult.innerHTML += resultTable;
         }
 
         function removeSearching() {
