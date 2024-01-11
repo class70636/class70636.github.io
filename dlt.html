@@ -78,6 +78,8 @@
             var startDate = new Date('2007-01');
             var endDate = new Date();
 
+            var fetchError = false;
+
             // 收集所有 fetch 的 Promise
             const fetchPromises = [];
 
@@ -103,6 +105,11 @@
                     })
                     .catch(error => {
                         console.log(`Error: ${error}`);
+                        const loadingModalBody = document.getElementById('loadingModalBody');
+                        loadingModalBody.innerHTML = `
+                        <i class="bi bi-arrow-clockwise text-danger"></i> 資料讀取失敗，請重新整理
+                        `;
+                        fetchError = true;
                     });
 
                 fetchPromises.push(fetchPromise);
@@ -111,13 +118,10 @@
             }
 
             Promise.all(fetchPromises).then(() => {
-                myModal.hide();
+                if (!fetchError)
+                    myModal.hide();
             }).catch(error => {
                 console.log(`Error: ${error}`);
-                const loadingModalBody = document.getElementById('loadingModalBody');
-                loadingModalBody.innerHTML = `
-                <i class="bi bi-arrow-clockwise text-danger"></i> 資料讀取失敗，請重新整理
-                `;
             });
 
             // console.log(LTDDatas);
