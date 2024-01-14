@@ -12,11 +12,73 @@
         .custom-no-arrow::after {
             display: none;
         }
+
+        /* 將數字包裹在一個容器中 */
+        .circle-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        /* 定義圓圈的樣式 */
+        .circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            /* border: 2px solid #000; */
+            /* 圓圈的邊框樣式 */
+            /* margin: 15px; */
+            /* 圓圈之間的間距 */
+            font-size: 30px;
+            /* 數字的字體大小 */
+            font-weight: bold;
+            background: 50%/cover no-repeat url(https://www.taiwanlottery.com/images/bg/ball.svg);
+            ;
+            color: black;
+        }
+
+        .not-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid #ffffff;
+            /* 圓圈之間的間距 */
+            font-size: 30px;
+            /* 數字的字體大小 */
+            font-weight: bold;
+
+            color: white;
+        }
+
+        /* 設定整個頁面的高度 */
+        body,
+        html {
+            height: 100%;
+        }
+
+        /* 設定特定 div 的高度，並在需要的時候顯示滾動條 */
+        .scrollable-div {
+            height: 85vh;
+            /* 設定 div 的高度 */
+            /* border: 1px solid #ccc; */
+            /* 可選：添加邊框樣式 */
+        }
     </style>
 </head>
 
 <body>
-    <div class="container-fluid" style="width: 80%;">
+    <div class="container-fluid h-100" style="width: 80%;">
+        <div class="row text-center">
+            <div class="container">
+                <div class="alert alert-primary mt-3" role="alert" id="closestData">
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div class="container">
@@ -38,13 +100,14 @@
                     <div class="row">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <button type="button" class="btn btn-warning" onclick="checkHistoryOfSelf()">歷史紀錄統計</button>
+                            <button type="button" class="btn btn-info" onclick="autoPrize()">自動對號</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="mt-3">
-                    <div class="accordion" id="repeatResult">
+                <div class="mt-3 scrollable-div overflow-auto">
+                    <div class="accordion" id="resultShower">
                     </div>
                 </div>
             </div>
@@ -78,15 +141,21 @@
         });
 
         var LTDDatas = [];
+        var closestTempData = null; //最靠近今天的開獎資料
         function catchDatas() {
             //抓取日為2007-01至今
             var startDate = new Date('2007-01');
             var endDate = new Date();
 
+            //
+            var closestDate = new Date('9999-12-31');
+            var currentDate = new Date();
+
             var fetchError = false;
 
             // 收集所有 fetch 的 Promise
             const fetchPromises = [];
+
 
             while (startDate <= endDate) {
                 const dateFormatt = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}`;
@@ -106,6 +175,14 @@
                                 for (let i = 0; i < n.drawNumberSize.length; i++)
                                     n.drawNumberSize[i] = n.drawNumberSize[i].toString();
                                 LTDDatas.push(n);
+
+                                //找出最靠近今日的資料
+                                var tempDate = new Date(n.lotteryDate);
+                                var timeDiff = Math.abs(currentDate - tempDate);
+                                if (timeDiff < closestDate) {
+                                    closestDate = timeDiff;
+                                    closestTempData = n;
+                                }
                             })
                     })
                     .catch(error => {
@@ -125,11 +202,29 @@
             Promise.all(fetchPromises).then(() => {
                 if (!fetchError)
                     myModal.hide();
+
+                //顯示最新一期資訊
+                const closestData = document.getElementById('closestData');
+                const cdNumbers = closestTempData.drawNumberSize;
+                const speNumber = closestTempData.drawNumberAppear[6];
+                const drawDate = new Date(closestTempData.lotteryDate);
+                // 創建星期幾的數字對應表
+                const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+                // 獲取日期對應的星期數字
+                var weekdayNumber = drawDate.getDay();
+                var dateDisplay = `${drawDate.getFullYear()}/${drawDate.getMonth() + 1}/${drawDate.getDate()} ${weekdays[weekdayNumber]}`;
+
+                var display = `最新一期：#${closestTempData.period}　[ ${cdNumbers[0]} , ${cdNumbers[1]} , ${cdNumbers[2]} , ${cdNumbers[3]} , ${cdNumbers[4]} , ${cdNumbers[5]} , ${speNumber} ]　(${dateDisplay})`;
+                closestData.innerHTML = display;
+
+                // myModal.hide();
             }).catch(error => {
                 console.log(`Error: ${error}`);
+                const loadingModalBody = document.getElementById('loadingModalBody');
+                loadingModalBody.innerHTML = `
+                        <i class="bi bi-arrow-clockwise text-danger"></i> 資料讀取失敗，請重新整理
+                        `;
             });
-
-            // console.log(LTDDatas);
         }
 
         var checkNumbersArr = [];
@@ -143,8 +238,8 @@
             })
             // console.log(checkNumbersArr);
 
-            const repeatResult = document.getElementById('repeatResult');
-            repeatResult.innerHTML = '';
+            const resultShower = document.getElementById('resultShower');
+            resultShower.innerHTML = '';
             repeatCalc();
 
 
@@ -196,14 +291,14 @@
                                 </button>
                             </h2>
                             <div id="collapse-${i}" class="accordion-collapse collapse" aria-labelledby="heading-${i}"
-                                data-bs-parent="#repeatResult">
+                                data-bs-parent="#resultShower">
                                 <div class="accordion-body">
                                     ${getAccBody()}
                                 </div>
                             </div>
                         </div>
                     `;
-                    repeatResult.innerHTML += btn_element;
+                    resultShower.innerHTML += btn_element;
 
                     function getAccBody() {
                         let temp = ``;
@@ -245,8 +340,8 @@
             })
             // console.log(checkNumbersArr);
 
-            const repeatResult = document.getElementById('repeatResult');
-            repeatResult.innerHTML = '';
+            const resultShower = document.getElementById('resultShower');
+            resultShower.innerHTML = '';
 
             repeatCalc();
 
@@ -298,14 +393,14 @@
                                 </button>
                             </h2>
                             <div id="collapse-${i}" class="accordion-collapse collapse" aria-labelledby="heading-${i}"
-                                data-bs-parent="#repeatResult">
+                                data-bs-parent="#resultShower">
                                 <div class="accordion-body">
                                     ${getAccBody()}
                                 </div>
                             </div>
                         </div>
                     `;
-                    repeatResult.innerHTML += btn_element;
+                    resultShower.innerHTML += btn_element;
 
                     function getAccBody() {
                         let card_body = ``;
@@ -338,8 +433,8 @@
         }
 
         function checkHistoryOfSelf() {
-            const repeatResult = document.getElementById('repeatResult');
-            repeatResult.innerHTML = '';
+            const resultShower = document.getElementById('resultShower');
+            resultShower.innerHTML = '';
 
             var temp_data = []; //紀錄每期分別重複4,5,6個數字的統計
             for (let i = 0; i < LTDDatas.length; i++) {
@@ -412,15 +507,71 @@
             </table>
             `;
 
-            repeatResult.innerHTML += resultTable;
+            resultShower.innerHTML += resultTable;
+        }
+
+        //自動對號
+        function autoPrize() {
+            var checkNumbersArr = []
+            const checkNumbers = document.getElementById('checkNumbers');
+
+            if (checkNumbers.value.length == 0) return;
+            const period = checkNumbers.value.split('\n');
+            period.forEach(n => {
+                checkNumbersArr.push(n.split(','));
+            })
+
+            //取得最新一期開講號
+            const newsetDrawNumber = closestTempData.drawNumberAppear;
+
+            var drawData = [];
+            for (let i = 0; i < checkNumbersArr.length; i++) {
+                var tempIndexs = [];
+                const drawNumbers = checkNumbersArr[i];
+                for (let j = 0; j < drawNumbers.length; j++) {
+                    for (let k = 0; k < newsetDrawNumber.length; k++) {
+                        if (drawNumbers[j] === newsetDrawNumber[k].toString()) {
+                            tempIndexs.push(j);
+                            break;
+                        }
+                    }
+                }
+                drawData.push(tempIndexs);
+            }
+
+            const resultShower = document.getElementById('resultShower');
+            resultShower.innerHTML = ``;
+
+            for (let i = 0; i < checkNumbersArr.length; i++) {
+                var circles = ``;
+                const drawNumber = checkNumbersArr[i];
+                const dData = new Set(drawData[i]);
+                for (let j = 0; j < drawNumber.length; j++) {
+                    circles += `<div class="${dData.has(j) ? `circle` : `not-circle`}">${drawNumber[j]}</div>`;
+                }
+                const str = `
+                <div class="card mt-2">
+                    <h5 class="card-header">#${i + 1}</h5>
+                    <div class="card-body">
+                    <!-- 數字容器 -->
+                        <div class="circle-container">
+                        <!-- 每個數字都放在一個圓圈內 -->
+                            ${circles}
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                resultShower.innerHTML += str;
+            }
         }
 
         function removeSearching() {
             const checkNumbers = document.getElementById('checkNumbers');
             checkNumbers.value = '';
 
-            const repeatResult = document.getElementById('repeatResult');
-            repeatResult.innerHTML = '';
+            const resultShower = document.getElementById('resultShower');
+            resultShower.innerHTML = '';
         }
     </script>
 </body>
