@@ -68,14 +68,31 @@
             /* border: 1px solid #ccc; */
             /* 可選：添加邊框樣式 */
         }
+
+        #typeData {
+            border: none;
+        }
+
+        #typeData:focus {
+            border: none;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid h-100" style="width: 80%;">
-        <div class="row text-center">
+        <div class="row">
             <div class="container">
-                <div class="alert alert-primary mt-3" role="alert" id="closestData">
+                <div class="alert alert-primary mt-3 text-center mb-0" role="alert" id="closestData">
+                </div>
+                <div class="alert alert-primary mt-3 text-center mb-0 d-none" role="alert" id="typeDataAlert">
+                    <input type="text" class="form-control text-center" id="typeData" placeholder="輸入獎號"
+                        style="background-color: rgba(255, 255, 255, 0);">
+                </div>
+                <div class="form-check form-switch float-end">
+                    <input class="form-check-input" type="checkbox" role="switch" id="typeDrawNumber"
+                        onchange="switchTypeDrawNumber(this)">
+                    <label class="form-check-label" for="flexSwitchCheckDefault" id="typeDrawNumberLb">自動數據</label>
                 </div>
             </div>
         </div>
@@ -142,6 +159,7 @@
 
         var LTDDatas = [];
         var closestTempData = null; //最靠近今天的開獎資料
+        var newestDrawDataDisplay;
         function catchDatas() {
             //抓取日為2007-01至今
             var startDate = new Date('2007-01');
@@ -215,7 +233,7 @@
                 var dateDisplay = `${drawDate.getFullYear()}/${drawDate.getMonth() + 1}/${drawDate.getDate()} ${weekdays[weekdayNumber]}`;
 
                 var display = `最新一期：#${closestTempData.period}　[ ${cdNumbers[0]} , ${cdNumbers[1]} , ${cdNumbers[2]} , ${cdNumbers[3]} , ${cdNumbers[4]} , ${cdNumbers[5]} , ${speNumber} ]　(${dateDisplay})`;
-                closestData.innerHTML = display;
+                closestData.innerHTML = newestDrawDataDisplay = display;
 
                 // myModal.hide();
             }).catch(error => {
@@ -510,6 +528,25 @@
             resultShower.innerHTML += resultTable;
         }
 
+        var typeDrawNumber = null; //手動輸入的開獎資料
+        // var tempDrawData = null; // 用來自動對號
+        var typedStatus = false;
+
+        function switchTypeDrawNumber(n) {
+            const closestData = document.getElementById('closestData');
+            const typeAlert = document.getElementById('typeDataAlert');
+            const label = document.getElementById('typeDrawNumberLb');
+            if (typedStatus = n.checked) {
+                closestData.classList.add('d-none');
+                typeAlert.classList.remove('d-none');
+                label.innerHTML = '手動數據';
+            } else {
+                closestData.classList.remove('d-none');
+                typeAlert.classList.add('d-none');
+                label.innerHTML = '自動數據';
+            }
+        }
+
         //自動對號
         function autoPrize() {
             var checkNumbersArr = []
@@ -521,8 +558,17 @@
                 checkNumbersArr.push(n.split(','));
             })
 
+            if (typedStatus) {
+                const data = document.getElementById('typeData');
+                if (data.value.length == 0) {
+                    alert('請輸入獎號');
+                    return;
+                }
+                typeDrawNumber = data.value.split(',');
+            }
+
             //取得最新一期開講號
-            const newsetDrawNumber = closestTempData.drawNumberAppear;
+            const newsetDrawNumber = typedStatus ? typeDrawNumber : closestTempData.drawNumberAppear;
 
             var drawData = [];
             for (let i = 0; i < checkNumbersArr.length; i++) {
