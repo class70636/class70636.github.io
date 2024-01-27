@@ -41,7 +41,7 @@
             background-size: 120%;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.025;
+            opacity: 0;
             /* Initial opacity */
             z-index: -1;
             /* Place the container behind other content */
@@ -126,6 +126,24 @@
         .left-image {
             left: 0;
         }
+
+        .no-thumb::-webkit-slider-thumb {
+            appearance: none;
+            width: 0;
+            /* Set thumb width to 0 */
+        }
+
+        .no-thumb::-moz-range-thumb {
+            appearance: none;
+            width: 0;
+            /* Set thumb width to 0 */
+        }
+
+        .no-thumb::-ms-thumb {
+            appearance: none;
+            width: 0;
+            /* Set thumb width to 0 */
+        }
     </style>
 </head>
 
@@ -190,8 +208,8 @@
                                             id="autoPrize">自動對號</button>
                                     </div>
                                 </div>
-                                <input type="range" class="form-range" min="0.025" max="1" step="0.005"
-                                    id="customRange3" value="0.025" oninput="bgop(this)">
+                                <input type="range" class="form-range no-thumb" min="0" max="1" step="0.005"
+                                    id="customRange3" value="0" oninput="bgop(this)" style="opacity: 0.1;">
                             </div>
                         </div>
                         <div class="col">
