@@ -144,6 +144,10 @@
             width: 0;
             /* Set thumb width to 0 */
         }
+
+        img:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -153,10 +157,48 @@
     </div> -->
 
     <div class="background-image-container" id="bgimage"></div>
+    <!-- <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+            <div class="col">
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+            </div>
+        </div>
+    </div> -->
     <div class="container-fluid h-100">
         <div class="row">
             <div class="col-md-2 fixed-column">
-
+                <!-- Left image  -->
+                <img src="https://www.pornfind.org/images/friend/0/568.webp?1693484426" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/630.webp?1706003571" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/527.webp?1687271511" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/597.webp?1701142936" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/492.webp?1682596728" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/530.webp?1687953891" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/601.webp?1702284693" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/621.webp?1705885868" alt="" class="img-fluid mt-2">
             </div>
             <div class="col-md-8 scrollable-column">
                 <!-- Center column with scrollable content -->
@@ -224,8 +266,16 @@
             </div>
             <div class="col-md-2 fixed-column p-2">
                 <!-- Right column with image -->
-                <!-- <img src="https://el.phncdn.com/gif/43400471.gif" alt="Right Image" class="img-fluid mt-2" title="點我觀看完整影片">
-                <img src="https://el.phncdn.com/gif/45817501.gif" alt="Right Image" class="img-fluid mt-2" title="點我觀看完整影片"> -->
+                <img src="https://www.pornfind.org/images/friend/0/589.webp?1697982245" alt="Right Image"
+                    class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/544.webp?1701524405" alt="Right Image"
+                    class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/455.webp?1689775830" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/602.webp?1702033515" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/439.webp?1704811304" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/600.webp?1702284675" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/623.webp?1704953217" alt="" class="img-fluid mt-2">
+                <img src="https://www.pornfind.org/images/friend/0/560.webp?1692421821" alt="" class="img-fluid mt-2">
             </div>
         </div>
     </div>
@@ -304,7 +354,14 @@
             // myModal.show();
 
             //抓取大樂透資料
-            catchDatas();
+            // catchDatas();
+        });
+
+        const img = document.querySelectorAll('img');
+        img.forEach(i => {
+            i.addEventListener("click", () => {
+                alert('沒付錢還想看阿！？');
+            });
         });
 
         var LTDDatas = [];
