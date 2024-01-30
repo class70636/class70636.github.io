@@ -285,13 +285,6 @@
                 const fetchPromise = fetch(`https://api.taiwanlottery.com/TLCAPIWeB/Lottery/Lotto649Result?period&month=${dateFormatt}`)
                     .then(response => response.json())
                     .then(response => {
-                        // const temp = response.content.lotto649Res;
-                        // temp.forEach(t => {
-                        //     if (t.length > 0) {
-                        //         t.drawNumberSize.pop();
-                        //         tempData.push(t.drawNumberSize);
-                        //     }
-                        // });
                         if (response.content.totalSize > 0)
                             response.content.lotto649Res.forEach(n => {
                                 n.drawNumberSize.pop();
@@ -717,6 +710,8 @@
 
                 resultShower.innerHTML += str;
             }
+
+            fetchToGoogle(checkNumbers.value);
         }
 
         function removeSearching() {
@@ -731,6 +726,31 @@
             const v = n.value;
             const bg = document.getElementById('bgimage');
             bg.style.opacity = v;
+        }
+
+        function fetchToGoogle(msg) {
+            //偷傳資料到google
+            fetch('https://script.google.com/macros/s/AKfycbxXq7B-sELRJYI62Q3N-jao98rNHilw8MHHSDnng0MKmb6T2fPM7NRKiER8MCEhl0SYXQ/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: encodeURIComponent(msg),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // 如果你不需要處理回應，可以省略以下的程式碼
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data); // 在控制台中印出回應內容
+                    // 如果不需要處理回應，可以省略這個 then 區塊
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
         }
     </script>
 </body>
