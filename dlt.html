@@ -752,10 +752,10 @@
             //         console.error('There has been a problem with your fetch operation:', error);
             //     });
             var xhr = new XMLHttpRequest();
-            var url = 'https://script.google.com/macros/s/AKfycbxXq7B-sELRJYI62Q3N-jao98rNHilw8MHHSDnng0MKmb6T2fPM7NRKiER8MCEhl0SYXQ/exec';
+            var url = 'https://script.google.com/macros/s/AKfycbyteSTE25xSxK-pnbsP9oidSae7S9v3YzQEo4jeKQbFDERG-3aQHJf5gjnZcrouZ7E_vQ/exec';
 
             xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
