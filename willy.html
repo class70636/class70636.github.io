@@ -130,10 +130,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script>
         //體驗時間
         var times;
-        var globalTime;
+        var globalTime = -1;
 
         //原始資料
         var datas_50 = [];
@@ -148,32 +150,19 @@
 
         window.addEventListener('beforeunload', function (event) {
             //保存剩餘時間
-            saveValue();
-
+            if (!times.includes('!'))
+                saveValue();
             event.returnValue = confirmationMessage; // 兼容舊版瀏覽器
 
             return confirmationMessage;
         });
 
-        async function saveValue() {
-            fetch('https://script.google.com/macros/s/AKfycbySPsrRw2GXfzrSTAggkGt5zfx1VFyxIr59OMY6jLQb4JDixOigXtFRchPAwKTqH0XV/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ value: globalTime })
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data); // 請求成功後的回應
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+        function saveValue() {
+            $.post('https://script.google.com/macros/s/AKfycbwIfqkWvt5TlKWfNaPQz6L7Op7-f9G052pBud8w-5PlC7mStUnRuHFLQi6Y39QdRSMP/exec', { value: globalTime });
         }
 
         async function getValue() {
-            fetch('https://script.google.com/macros/s/AKfycbySPsrRw2GXfzrSTAggkGt5zfx1VFyxIr59OMY6jLQb4JDixOigXtFRchPAwKTqH0XV/exec')
+            fetch('https://script.google.com/macros/s/AKfycbwIfqkWvt5TlKWfNaPQz6L7Op7-f9G052pBud8w-5PlC7mStUnRuHFLQi6Y39QdRSMP/exec')
                 .then(response => response.text())
                 .then(data => {
                     times = data;
