@@ -62,9 +62,10 @@
     </style>
 </head>
 
-<body>
-    <div class="fs-1 text-danger invisible" id="timeoutText">可體驗時間已用罄!</div>
-    <div class="fs-4 invisible" id="timerNoticer">剩餘可體驗時間: </div>
+<body oncut="return false" oncut="return false" oncopy="return false" onpaste="return false" ondrag="return false"
+    ondrop="return false" style="user-select: none;">
+    <!-- <div class="fs-1 text-danger invisible" id="timeoutText">可體驗次數已用罄!</div> -->
+    <div class="fs-2 text-danger invisible" id="timerNoticer">體驗版</div>
     <div class="container invisible" id="mainCounter">
         <div class="row fs-4">
             <div class="col p-2">
@@ -133,9 +134,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script>
-        //體驗時間
-        var times;
-        var globalTime = -1;
+        //模糊倍率
+        var blurPercent = 0.75;
 
         //原始資料
         var datas_50 = [];
@@ -144,84 +144,31 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             //取得50期近期資料
-            // catchDatas();
             getValue();
         });
 
-        window.addEventListener('beforeunload', function (event) {
-            //保存剩餘時間
-            if (!times.includes('!'))
-                saveValue();
-            event.returnValue = confirmationMessage; // 兼容舊版瀏覽器
-
-            return confirmationMessage;
-        });
-
-        function saveValue() {
-            $.post('https://script.google.com/macros/s/AKfycbwIfqkWvt5TlKWfNaPQz6L7Op7-f9G052pBud8w-5PlC7mStUnRuHFLQi6Y39QdRSMP/exec', { value: globalTime });
-        }
-
-        async function getValue() {
-            fetch('https://script.google.com/macros/s/AKfycbwIfqkWvt5TlKWfNaPQz6L7Op7-f9G052pBud8w-5PlC7mStUnRuHFLQi6Y39QdRSMP/exec')
+        function getValue() {
+            fetch('https://script.google.com/macros/s/AKfycbxzsYjOIxqbH8kJU9E2mX2rsfcibu3k8EfPICOK59GvqnwIGZnEfOIGXDEId_c5mkUH/exec')
                 .then(response => response.text())
                 .then(data => {
-                    times = data;
-                    countingTime();
+                    blurPercent = data.includes('!') ? 0 : parseFloat(data);
+                    catchDatas();
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
 
-        function countingTime() {
-            //判斷是否有驚嘆號為測試管理員
-            if (times.includes('!')) catchDatas();
-            else {
-                //確定剩餘時間
-                const time = parseInt(times.replace('!', ''));
-                //剩餘時間<=0則顯示時間用罄
-                if (time <= 0) {
-                    const timeoutText = document.getElementById('timeoutText');
-                    timeoutText.classList.remove('invisible');
-
-                } else { //倒數計時
-                    const noticer = document.getElementById('timerNoticer');
-                    noticer.classList.remove('invisible');
-                    catchDatas();
-                    countdown(time);
-                }
-            }
-
-            function countdown(time) {
-                // 設定倒數時間（以秒為單位）
-                function updateCountdown() {
-                    globalTime = time--;
-                    if (time >= 0) {
-                        const noticer = document.getElementById('timerNoticer');
-                        noticer.innerHTML = `剩餘可體驗時間: ${time}`;
-                        setTimeout(updateCountdown, 1000); // 每秒更新一次
-                    } else {
-                        //時間到
-                        const noticer = document.getElementById('timerNoticer');
-                        noticer.classList.add('invisible');
-
-                        const timeoutText = document.getElementById('timeoutText');
-                        timeoutText.classList.remove('invisible');
-
-                        const main = document.getElementById('mainCounter');
-                        main.classList.add('invisible');
-
-                        saveValue();
-                    }
-                }
-                updateCountdown();
-            }
-        }
-
         async function catchDatas() {
             //show出統計
             const main = document.getElementById('mainCounter');
             main.classList.remove('invisible');
+
+            //show出體驗版訊息
+            if (blurPercent > 0) {
+                const noticer = document.getElementById('timerNoticer');
+                noticer.classList.remove('invisible');
+            }
 
             let totalSize = 0;
             let now = new Date();
@@ -316,10 +263,12 @@
                 //插入值
                 const sorted = n == 0 ? [...sortedByValue] : [...sortedByKey];
                 sorted.forEach(n => {
+                    //亂數模糊
+                    const blur = Math.random() < blurPercent;
                     //計算百分比
                     const percent = n[1] / 50 * 100;
                     const trInner = `
-                        <tr>
+                        <tr ${blur ? `style="filter: blur(4px);"` : ``}>
                             <td class="p-0">${n[0]}</td>
                             <td class="p-0">${n[1]} (${parseFloat(percent.toFixed(2))}%)</td>
                         <tr>
@@ -351,10 +300,12 @@
             //插入值
             const sorted = sort == 0 ? [...sortedByValue] : [...sortedByKey];
             sorted.forEach(n => {
+                //亂數模糊
+                const blur = Math.random() < blurPercent;
                 //計算百分比
                 const percent = n[1] / 50 * 100;
                 const trInner = `
-                        <tr>
+                        <tr ${blur ? `style="filter: blur(4px);"` : ``}>
                             <td class="p-0">${n[0]}</td>
                             <td class="p-0">${n[1]} (${parseFloat(percent.toFixed(2))}%)</td>
                         <tr>
