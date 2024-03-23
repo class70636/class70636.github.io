@@ -27,17 +27,9 @@
 
         .pickNotice {
             position: fixed;
-            /* 固定定位 */
             right: 20px;
-            /* 距離右邊 20px */
             bottom: 20px;
-            /* 距離底部 20px */
-            /* background-color: #f00; */
-            /* 背景顏色，可以根據需要自行調整 */
             padding: 10px;
-            /* 內邊距，可以根據需要自行調整 */
-            /* color: #fff; */
-            /* 文字顏色，可以根據需要自行調整 */
             font-size: large;
         }
 
@@ -64,7 +56,7 @@
 
 <body oncut="return false" oncut="return false" oncopy="return false" onpaste="return false" ondrag="return false"
     ondrop="return false" style="user-select: none;">
-    <!-- <div class="fs-1 text-danger invisible" id="timeoutText">可體驗次數已用罄!</div> -->
+    <div class="fs-1 text-warning" id="timeoutText">正在抓取資料...</div>
     <div class="fs-2 text-danger invisible" id="timerNoticer">體驗版</div>
     <div class="container invisible" id="mainCounter">
         <div class="row fs-4">
@@ -219,6 +211,9 @@
                     const date = new Date(data.lotteryDate);
                     return `#${data.period}[${date.getFullYear() - 1911} 年 ${date.getMonth() + 1} 月 ${date.getDate()} 日]`;
                 }
+
+                const text = document.getElementById('timeoutText');
+                text.classList.add('invisible');
             });
 
         }
@@ -262,9 +257,11 @@
                 counterBody.innerHTML = '';
                 //插入值
                 const sorted = n == 0 ? [...sortedByValue] : [...sortedByKey];
-                sorted.forEach(n => {
+                const sortedLength = sorted.length;
+                sorted.forEach((n, index) => {
                     //亂數模糊
-                    const blur = Math.random() < blurPercent;
+                    let blur = Math.random() < blurPercent;
+                    if (index == 0 || index == sortedLength - 1) blur = 1;
                     //計算百分比
                     const percent = n[1] / 50 * 100;
                     const trInner = `
@@ -299,9 +296,11 @@
             counterBody.innerHTML = '';
             //插入值
             const sorted = sort == 0 ? [...sortedByValue] : [...sortedByKey];
-            sorted.forEach(n => {
+            const sortedLength = sorted.length;
+            sorted.forEach((n, index) => {
                 //亂數模糊
-                const blur = Math.random() < blurPercent;
+                let blur = Math.random() < blurPercent;
+                if (index == 0 || index == sortedLength - 1) blur = 1;
                 //計算百分比
                 const percent = n[1] / 50 * 100;
                 const trInner = `
