@@ -54,10 +54,31 @@
     </style>
 </head>
 
-<body oncut="return false" oncut="return false" oncopy="return false" onpaste="return false" ondrag="return false"
-    ondrop="return false" style="user-select: none;">
+<body oncut="return false" oncopy="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+    style="user-select: none;">
     <div class="fs-1 text-warning" id="timeoutText">正在抓取資料...</div>
-    <div class="fs-2 text-danger invisible" id="timerNoticer">體驗版</div>
+    <div class="fs-2 text-danger invisible" id="timerNoticer">
+        <span>體驗版</span>
+        <!-- <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">升級到正式版</button> -->
+    </div>
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning" id="exampleModalLabel">升級</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    升級至正式版享有不模糊資料的最佳體驗。</br></br>
+                    請將3000元匯款至以下帳號：</br>
+                    017(兆豐銀行) 003-13-47853-4
+                </div>
+            </div>
+        </div>
+    </div> -->
+
     <div class="container invisible" id="mainCounter">
         <div class="row fs-4">
             <div class="col p-2">
@@ -128,6 +149,8 @@
     <script>
         //模糊倍率
         var blurPercent = 0.75;
+        //OP模式
+        var isOP = false;
 
         //原始資料
         var datas_50 = [];
@@ -144,6 +167,7 @@
                 .then(response => response.text())
                 .then(data => {
                     blurPercent = data.includes('!') ? 0 : parseFloat(data);
+                    isOP = data.includes('!');
                     catchDatas();
                 })
                 .catch(error => {
@@ -261,7 +285,7 @@
                 sorted.forEach((n, index) => {
                     //亂數模糊
                     let blur = Math.random() < blurPercent;
-                    if (index == 0 || index == sortedLength - 1) blur = 1;
+                    if ((index == 0 || index == sortedLength - 1) && !isOP) blur = 1;
                     //計算百分比
                     const percent = n[1] / 50 * 100;
                     const trInner = `
@@ -300,7 +324,7 @@
             sorted.forEach((n, index) => {
                 //亂數模糊
                 let blur = Math.random() < blurPercent;
-                if (index == 0 || index == sortedLength - 1) blur = 1;
+                if ((index == 0 || index == sortedLength - 1) && !isOP) blur = 1;
                 //計算百分比
                 const percent = n[1] / 50 * 100;
                 const trInner = `
