@@ -209,6 +209,8 @@
 
             Promise.all(fetchPromises).then(() => {
                 // console.log(datas_50);
+                //將原始資料值壓在50個
+                while (datas_50.length > 50) datas_50.pop();
 
                 //顯示取得區間
                 const startData = datas_50[49];
