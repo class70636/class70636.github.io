@@ -20,7 +20,7 @@
     <script>
 
         const manifestUri =
-            'https://api.xvid.com/v1/playlists/dash.mpd?file_id=65d9037b0feed3304b94c24f,65d9037b0feed3304b94c5cf&multi_use=true&redirect=true&expiry_time=1715529600&encryption=true&streaming=true&client_id=5a68e952e4b0de4febbd1a9a&signature=47afac2bf04fc6796183d01bce89a7fb811ac848';
+            'https://api.xvid.com/v1/playlists/dash.mpd?file_id=66402f27b8738696438d1e45,66402f27b8738696438d1ed4&multi_use=true&redirect=true&expiry_time=1715702400&encryption=true&streaming=true&client_id=5a68e952e4b0de4febbd1a9a&signature=69f13f65e188a989abb0420d51d8897a9c4bed64';
 
         async function init() {
             // When using the UI, the player is made automatically by the UI object.
@@ -32,7 +32,7 @@
             player.configure({
                 drm: {
                     servers: {
-                        'org.w3.clearkey': 'https://api.xvid.com/v1/playlists/keys/?multi_use=true&redirect=true&expiry_time=1715529600&encryption=true&kid=b39ebe4b068b9cd91cd9be5a5d63650c&streaming=true&client_id=5a68e952e4b0de4febbd1a9a&signature=bd16018631914ac76d3b6fe692be9d56d4ebf66a'
+                        'org.w3.clearkey': 'https://api.xvid.com/v1/playlists/keys/?multi_use=true&redirect=true&expiry_time=1715702400&encryption=true&kid=b39ebe4b068b9cd91cd9be5a5d63650c&streaming=true&client_id=5a68e952e4b0de4febbd1a9a&signature=d5538d7694cc1e7aa27debc935ac32ebc42b2080'
                     }
                 }
             });
