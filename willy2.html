@@ -152,17 +152,10 @@
         var tails = []; //尾數陣列(沒重複)
         var tailsRe = []; //尾數陣列(有重複)
         var tailGroup, tailGroupCombi;
-        var fontSize;
 
         document.addEventListener("DOMContentLoaded", function () {
             tailGroup = document.getElementById('tail-group');
             tailGroupCombi = document.getElementById('tail-group-combi');
-
-            //檢查cookie文字大小
-            const match = document.cookie.match(new RegExp('(^| )fs=([^;]+)'));
-            if (match)
-                fontSize = match ? match[2] : 'fs-s';
-            document.querySelector('#mainCounter').classList.add(fontSize);
 
             $.extend($.fn.dataTable.defaults, {
                 "searching": false,
@@ -413,7 +406,6 @@
                 if (b === btn) {
                     b.classList.add('active');
                     mainCounter.classList.add(b.value);
-                    document.cookie = 'fs=' + b.value;
                 }
                 else {
                     b.classList.remove('active');
