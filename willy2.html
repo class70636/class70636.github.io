@@ -86,11 +86,14 @@
             <button type="button" class="btn btn-outline-primary" onclick="changeFontSize(this)" value="fs-l">大</button>
         </div>
     </div>
-    <div class="container invisible fs-s" id="mainCounter">
+    <div class="container invisible" id="mainCounter">
         <!-- Content here -->
         <div class="row justify-content-center align-items-center mt-3 border rounded">
             <div class="col-11">
-                <form class="row align-items-center p-3 pb-1 needs-validation" novalidate>
+                <div class="row ps-3 pt-1 pb-1 text-center ">
+                    <span id="picker"></span>
+                </div>
+                <form class="row align-items-center p-3 pb-1 pt-0 needs-validation" novalidate>
                     <div class="col-6">
                         <div class="input-group">
                             <span class="input-group-text">尾數群</span>
@@ -149,10 +152,17 @@
         var tails = []; //尾數陣列(沒重複)
         var tailsRe = []; //尾數陣列(有重複)
         var tailGroup, tailGroupCombi;
+        var fontSize;
 
         document.addEventListener("DOMContentLoaded", function () {
             tailGroup = document.getElementById('tail-group');
             tailGroupCombi = document.getElementById('tail-group-combi');
+
+            //檢查cookie文字大小
+            const match = document.cookie.match(new RegExp('(^| )fs=([^;]+)'));
+            if (match)
+                fontSize = match ? match[2] : 'fs-s';
+            document.querySelector('#mainCounter').classList.add(fontSize);
 
             $.extend($.fn.dataTable.defaults, {
                 "searching": false,
@@ -180,12 +190,7 @@
             const max = this.value.split(',').length;
             tailGroupCombi.setAttribute('max', max);
             if (tailGroupCombi.value > max) tailGroupCombi.value = max;
-            // if (this.value.length > 0) {
 
-            //     if (this.classList.contains('is-invalid')) this.classList.remove('is-invalid');
-            // } else {
-            //     if (!this.classList.contains('is-invalid')) this.classList.add('is-invalid');
-            // }
             if (!validate()) {
                 if (!this.classList.contains('is-invalid')) this.classList.add('is-invalid');
             } else if (this.classList.contains('is-invalid')) this.classList.remove('is-invalid');
@@ -232,9 +237,9 @@
                 //顯示取得區間
                 const startData = datas_50[49];
                 const endData = datas_50[0];
-                // const picker = document.getElementById('picker');
-                // const pickerStr = `期數區間: ${getDataDetail(startData)} ~ ${getDataDetail(endData)}`;
-                // picker.innerHTML = pickerStr;
+                const picker = document.getElementById('picker');
+                const pickerStr = `期數區間: ${getDataDetail(startData)} ~ ${getDataDetail(endData)}`;
+                picker.innerHTML = pickerStr;
 
                 //取尾數
                 const datasLength = datas_50.length;
@@ -246,10 +251,10 @@
                     tailsRe.push(temp);
                 }
 
-                // function getDataDetail(data) {
-                //     const date = new Date(data.lotteryDate);
-                //     return `#${data.period}[${date.getFullYear() - 1911} 年 ${date.getMonth() + 1} 月 ${date.getDate()} 日]`;
-                // }
+                function getDataDetail(data) {
+                    const date = new Date(data.lotteryDate);
+                    return `#${data.period}[${date.getFullYear() - 1911} 年 ${date.getMonth() + 1} 月 ${date.getDate()} 日]`;
+                }
 
                 const text = document.getElementById('catchingText');
                 text.classList.add('invisible');
@@ -260,13 +265,17 @@
         //查詢/插入按鈕
         var accordionCount = 0;
         function searchAndInsert() {
-            const accordionResult = document.getElementById('accordionResults');
             const tailGroup = document.getElementById('tail-group');
+            if (!tailGroupValidate) {
+                if (!tailGroup.classList.contains('is-invalid'))
+                    tailGroup.classList.add('is-invalid');
+                return;
+            } else if (tailGroup.classList.contains('is-invalid')) tailGroup.classList.remove('is-invalid');
+
+            const accordionResult = document.getElementById('accordionResults');
             const tailGroupCombiSize = parseInt(document.getElementById('tail-group-combi').value);
             const isRepeat = document.getElementById('repeat').checked;
-
-            if (!tailGroupValidate)
-                return;
+            const realTailGroupCombiSize = (tailGroupCombiSize == 1 && isRepeat) ? 6 : tailGroupCombiSize;
 
             //查詢
 
@@ -275,16 +284,16 @@
                     <h2 class="accordion-header sticky-top" id="heading_${accordionCount}">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse_${accordionCount}" aria-expanded="true" aria-controls="collapse_${accordionCount}">
-                            <span class="badge rounded-pill bg-success">尾數：${tailGroup.value}</span> 
-                            <span class="badge bg-info text-dark">${tailGroupCombi.value}個為一組</span> 
-                            <span class="badge rounded-pill bg-danger">${isRepeat ? '重複' : '不重複'}</span>
+                            <span class="badge bg-success">尾數：${tailGroup.value}</span> 
+                            <span class="badge bg-info text-dark ms-1">${tailGroupCombi.value}個為一組</span> 
+                            <span class="badge bg-danger ms-1">${isRepeat ? '重複' : '不重複'}</span>
                         </button>
                     </h2>
                     <div id="collapse_${accordionCount}" class="accordion-collapse collapse" aria-labelledby="heading_${accordionCount}"
                         data-bs-parent="#accordionResults">
                         <div class="accordion-body p-0">
                         </div>
-                        <div class="d-grid gap-2 mb-1">
+                        <div class="d-grid gap-2 mb-1 sticky-bottom">
                             <button class="btn btn-danger" type="button" onclick="deleteAccording(this)">刪除</button>
                         </div>
                     </div>
@@ -305,10 +314,10 @@
             `;
             const tableItem = new DOMParser().parseFromString(tableHtmlString, 'text/html').body.firstChild;
             const header = tableItem.querySelector('thead > tr');
-            for (let i = 1; i <= tailGroupCombiSize; i++) {
+            for (let i = 1; i <= realTailGroupCombiSize; i++) {
                 const tempItem = document.createElement('th');
                 tempItem.setAttribute('scope', 'col');
-                tempItem.innerText = `${i}次以上`;
+                tempItem.innerText = `${i}個以上`;
                 header.appendChild(tempItem);
             }
 
@@ -340,28 +349,24 @@
 
                 //建立物件陣列
                 let dataSet = [];
-                //
-                const tailsArr = combination(toIntArray, tailGroupCombiSize);
+
                 //建立物件陣列
+                const tailsArr = combination(toIntArray, tailGroupCombiSize);
                 tailsArr.forEach(n => {
-                    //2個,3個以上相同的次數
-                    // let countBy2 = 0, countBy3 = 0;
-                    let counts = new Array(tailGroupCombiSize);
+                    let counts = new Array(realTailGroupCombiSize);
                     for (let i = 0; i < counts.length; i++) counts[i] = 0;
                     //蝶帶尾數陣列(每期)
                     tempTails.forEach(k => {
                         const temp = k.filter(item => n.includes(item));
-                        // if (temp.length >= 2) countBy2++;
-                        // if (temp.length >= 3) countBy3++;
-                        for (let i = 1; i <= tailGroupCombiSize; i++)
+                        for (let i = 1; i <= realTailGroupCombiSize; i++) {
                             if (temp.length >= i) counts[i - 1]++;
+                        }
                     });
                     let data = [n.join(', ')];
                     counts.forEach(k => data.push(k));
                     dataSet.push(data);
                 });
 
-                // console.log(dataSet);
 
                 $(`#table_${accordionCount}`).DataTable({
                     "data": dataSet,
@@ -408,6 +413,7 @@
                 if (b === btn) {
                     b.classList.add('active');
                     mainCounter.classList.add(b.value);
+                    document.cookie = 'fs=' + b.value;
                 }
                 else {
                     b.classList.remove('active');
@@ -420,7 +426,6 @@
             const tableHeader = collapseShow.querySelector('.sticky-top2');
             const collapseHeader = collapseShow.parentElement.querySelector('.accordion-header');
             tableHeader.style.top = collapseHeader.clientHeight + 'px';
-
         }
     </script>
 </body>
