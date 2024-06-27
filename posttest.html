@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Apps Script POST</title>
+</head>
+
+<body>
+    <form id="myForm">
+        <label for="inputValue">Enter a value:</label>
+        <input type="text" id="inputValue" name="inputValue" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 阻止表單默認提交行為
+
+            const inputValue = document.getElementById('inputValue').value;
+
+            fetch('https://script.google.com/macros/s/AKfycbwVrc08uSonkHTknwcgx3NsyxbqWHOeAZjCPUXLAZIiBQ8uPFvRAZn0-5PLvjOKYs-9/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ inputValue: inputValue })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.documentElement.innerHTML = data; // 替換整個網頁內容
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>
