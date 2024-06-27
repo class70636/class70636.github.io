@@ -13,7 +13,8 @@
         <input type="text" id="inputValue" name="inputValue" required>
         <button type="submit">Submit</button>
     </form>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         document.getElementById('myForm').addEventListener('submit', function (event) {
             event.preventDefault(); // 阻止表單默認提交行為
@@ -39,9 +40,6 @@
             document.documentElement.innerHTML = result;
         });
     </script>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 
 </html>
