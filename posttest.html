@@ -20,20 +20,28 @@
 
             const inputValue = document.getElementById('inputValue').value;
 
-            fetch('https://script.google.com/macros/s/AKfycbx5hWq9V25EShjnyG6qw3OuIPrbSErmoERBQF9rjzR1vYrpN1rmTdFY1MjMkjtOlIY9/exec', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ inputValue: inputValue })
-            })
-                .then(response => response.text())
-                .then(data => {
-                    document.documentElement.innerHTML = data; // 替換整個網頁內容
-                })
-                .catch(error => console.error('Error:', error));
+            // fetch('https://script.google.com/macros/s/AKfycbx5hWq9V25EShjnyG6qw3OuIPrbSErmoERBQF9rjzR1vYrpN1rmTdFY1MjMkjtOlIY9/exec', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ inputValue: inputValue })
+            // })
+            //     .then(response => response.text())
+            //     .then(data => {
+            //         document.documentElement.innerHTML = data; // 替換整個網頁內容
+            //     })
+            //     .catch(error => console.error('Error:', error));
+
+
+        });
+        $.post("https://script.google.com/macros/s/AKfycbx5hWq9V25EShjnyG6qw3OuIPrbSErmoERBQF9rjzR1vYrpN1rmTdFY1MjMkjtOlIY9/exec", { message: inputValue }, function (result) {
+            document.documentElement.innerHTML = result;
         });
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 
 </html>
