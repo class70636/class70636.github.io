@@ -13,8 +13,8 @@
         <input type="text" id="inputValue" name="inputValue" required>
         <button type="submit">Submit</button>
     </form>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <div id="res"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         document.getElementById('myForm').addEventListener('submit', function (event) {
             event.preventDefault(); // 阻止表單默認提交行為
@@ -33,11 +33,9 @@
             //         document.documentElement.innerHTML = data; // 替換整個網頁內容
             //     })
             //     .catch(error => console.error('Error:', error));
-
-
-        });
-        $.post("https://script.google.com/macros/s/AKfycbx5hWq9V25EShjnyG6qw3OuIPrbSErmoERBQF9rjzR1vYrpN1rmTdFY1MjMkjtOlIY9/exec", { message: inputValue }, function (result) {
-            document.documentElement.innerHTML = result;
+            $.post("https://script.google.com/macros/s/AKfycbwVsYiq85TV8s_nzLOfvnIxu4J8u_hOByf5ubDn3lRoPaArUUwE1x57PXXwz2obo-Ox/exec", { message: inputValue }, function (result) {
+                document.documentElement.innerHTML = result;
+            });
         });
     </script>
 </body>
