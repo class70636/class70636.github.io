@@ -79,14 +79,35 @@
 <body>
     <div class="fs-1 text-warning" id="catchingText">正在抓取資料...</div>
     <div>
-        <div class="btn-group float-end me-3" role="group" aria-label="Basic example" id="font-size-block">
-            <button type="button" class="btn btn-outline-primary active" onclick="changeFontSize(this)"
-                value="fs-s">小</button>
-            <button type="button" class="btn btn-outline-primary" onclick="changeFontSize(this)" value="fs-m">中</button>
-            <button type="button" class="btn btn-outline-primary" onclick="changeFontSize(this)" value="fs-l">大</button>
+        <div class="float-end me-3">
+            <!-- <div class="btn-group" role="group" aria-label="Basic example" id="font-size-block">
+                <button type="button" class="btn btn-outline-primary active" onclick="changeFontSize(this)"
+                    value="fs-s">小</button>
+                <button type="button" class="btn btn-outline-primary" onclick="changeFontSize(this)"
+                    value="fs-m">中</button>
+                <button type="button" class="btn btn-outline-primary" onclick="changeFontSize(this)"
+                    value="fs-l">大</button>
+            </div> -->
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="fs-s"
+                    onclick="changeFontSize(this.value)">
+                <label class="btn btn-outline-primary" for="btnradio1">小</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="fs-m"
+                    onclick="changeFontSize(this.value)">
+                <label class="btn btn-outline-primary" for="btnradio2">中</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="fs-l"
+                    onclick="changeFontSize(this.value)">
+                <label class="btn btn-outline-primary" for="btnradio3">大</label>
+            </div>
+            <div class="d-grid gap-2 mt-1">
+                <button class="btn btn-primary" type="button" onclick="downloadHtml()">下載網頁</button>
+            </div>
         </div>
+
     </div>
-    <div class="container invisible" id="mainCounter">
+    <div class="container" id="mainCounter" style="display: none;">
         <!-- Content here -->
         <div class="row justify-content-center align-items-center mt-3 border rounded">
             <div class="col-11">
@@ -154,6 +175,8 @@
         var tailGroup, tailGroupCombi;
 
         document.addEventListener("DOMContentLoaded", function () {
+            loadTextSize();
+
             tailGroup = document.getElementById('tail-group');
             tailGroupCombi = document.getElementById('tail-group-combi');
 
@@ -169,6 +192,19 @@
 
             catchDatas();
         });
+
+        function loadTextSize() {
+            let savedSize = localStorage.getItem('textSize');
+            const main = document.getElementById('mainCounter');
+            if (!savedSize)
+                savedSize = 'fs-s';
+            main.className = `container ${savedSize}`;
+
+            const radioGroup = document.getElementsByName('btnradio');
+            radioGroup.forEach(r => {
+                r.checked = r.value === savedSize;
+            });
+        }
 
         //清除inputs
         document.getElementById('clearBtn').addEventListener('click', function () {
@@ -200,7 +236,7 @@
         //抓取大樂透資料
         async function catchDatas() {
             const main = document.getElementById('mainCounter');
-            main.classList.remove('invisible');
+            main.removeAttribute("style");
 
             let totalSize = 0;
             let now = new Date();
@@ -398,26 +434,50 @@
         }
 
         //更改字體大小
-        function changeFontSize(btn) {
-            const fsb = document.getElementById('font-size-block');
-            const btns = fsb.querySelectorAll('.btn');
-            const mainCounter = document.getElementById('mainCounter');
-            btns.forEach(b => {
-                if (b === btn) {
-                    b.classList.add('active');
-                    mainCounter.classList.add(b.value);
-                }
-                else {
-                    b.classList.remove('active');
-                    mainCounter.classList.remove(b.value);
-                }
-            });
+        function changeFontSize(value) {
+            const main = document.getElementById('mainCounter');
+            main.className = `container ${value}`;
+            localStorage.setItem('textSize', value);
 
             const collapseShow = document.querySelector('.show');
             if (collapseShow === null) return;
             const tableHeader = collapseShow.querySelector('.sticky-top2');
             const collapseHeader = collapseShow.parentElement.querySelector('.accordion-header');
             tableHeader.style.top = collapseHeader.clientHeight + 'px';
+        }
+
+        //下載網頁
+        async function downloadHtml() {
+            // const htmlContent = document.documentElement.outerHTML;
+            // const blob = new Blob([htmlContent], { type: 'text/html' });
+            // const url = URL.createObjectURL(blob);
+            // const a = document.createElement('a');
+            // a.href = url;
+            // a.download = 'willy.html';
+            // document.body.appendChild(a);
+            // a.click();
+            // document.body.removeChild(a);
+            // URL.revokeObjectURL(url);
+            try {
+                // 獲取當前頁面的URL
+                const currentUrl = window.location.href;
+                // 使用fetch獲取HTML內容
+                const response = await fetch(currentUrl);
+                const text = await response.text();
+
+                // 創建並下載包含完整網頁內容的文件
+                const blob = new Blob([text], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'webpage.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('下載網頁失敗:', error);
+            }
         }
     </script>
 </body>
