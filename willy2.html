@@ -102,7 +102,7 @@
                 <label class="btn btn-outline-primary" for="btnradio3">大</label>
             </div>
             <div class="d-grid gap-2 mt-1">
-                <button class="btn btn-primary" type="button" onclick="downloadHtml()">下載網頁</button>
+                <button class="btn btn-primary" type="button" onclick="downloadHtml()" id="dlBtn">下載網頁</button>
             </div>
         </div>
 
@@ -448,16 +448,6 @@
 
         //下載網頁
         async function downloadHtml() {
-            // const htmlContent = document.documentElement.outerHTML;
-            // const blob = new Blob([htmlContent], { type: 'text/html' });
-            // const url = URL.createObjectURL(blob);
-            // const a = document.createElement('a');
-            // a.href = url;
-            // a.download = 'willy.html';
-            // document.body.appendChild(a);
-            // a.click();
-            // document.body.removeChild(a);
-            // URL.revokeObjectURL(url);
             try {
                 // 獲取當前頁面的URL
                 const currentUrl = window.location.href;
@@ -465,12 +455,18 @@
                 const response = await fetch(currentUrl);
                 const text = await response.text();
 
+                //移除下載按鈕
+                const doc = new DOMParser().parseFromString(text, 'text/html');
+                doc.getElementById('dlBtn').remove();
+                text = new XMLSerializer().serializeToString(doc);
+
                 // 創建並下載包含完整網頁內容的文件
                 const blob = new Blob([text], { type: 'text/html' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
+
                 a.href = url;
-                a.download = 'webpage.html';
+                a.download = 'willy2.html';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
