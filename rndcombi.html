@@ -4,28 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="1.0.3">
-    <title>Document</title>
+    <meta name="version" content="1.0.2">
+    <title>RNDNumber</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css">
     <!-- 自型 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <link href="assets/css2.css" rel="stylesheet">
+    <!-- BS Icon -->
+    <link rel="stylesheet" href="assets/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="assets/bootstrap-icons/font/bootstrap-icons.min.css">
     <style>
+        /* @import url(node_modules/bootstrap-icons/font/bootstrap-icons.min.css); */
         body,
         html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
+            /* overflow: hidden; */
 
             font-family: "LXGW WenKai TC", cursive;
             font-weight: 400;
             font-style: normal;
         }
 
-        #zone1-table {
+        #zone1-table,
+        .zone2-table {
             border-collapse: separate;
             border: 1px solid rgb(255, 255, 255);
             border-radius: .25rem;
@@ -33,155 +38,622 @@
         }
 
         #zone1-table tbody tr,
-        #zone1-table tbody td {
+        #zone1-table tbody td,
+        .zone2-table tbody tr,
+        .zone2-table tbody td {
             padding: .1rem;
+        }
+
+        .zone2-badge {
+            display: none;
+            height: 100%;
+        }
+
+        .zone2-element:hover .zone2-badge {
+            display: block;
+        }
+
+        .zone2-element:hover:first-child .del-btn {
+            display: none;
+        }
+
+        .subtitle {
+            background: radial-gradient(ellipse 100% 100% at center, white, rgba(var(--bs-secondary-rgb)));
+            font-weight: bold;
+        }
+
+        dt,
+        dd {
+            font-weight: normal;
+        }
+
+        dd {
+            margin-bottom: 1rem;
+        }
+
+        dt::before {
+            content: '- ';
+        }
+
+        /* 展開Collapse */
+        .subtitle::after {
+            content: '\F238';
+            font-family: 'bootstrap-icons';
+            float: right;
+            margin-right: 1rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            /* transform: translateY(50%); */
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* 縮起Collapse */
+        .subtitle.collapsed::after {
+            content: '\F235';
+            font-family: 'bootstrap-icons';
+            float: right;
+            margin-right: 1rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            /* transform: translateY(50%); */
+            transform: rotate(-180deg);
+        }
+
+        .subtitle {
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <!-- <span id="app-version" class="position-absolute d-none" style="color: rgb(0, 255, 0);">123</span> -->
+    <div class="container pt-3">
         <!-- 隨機1 -->
-        <div>
-            <div class="row rounded">
-                <table class="table table-borderless p-0" id="zone1-table">
-                    <tbody>
-                        <tr>
-                            <td colspan="2" style="width: 50%;">
-                                <textarea class="form-control" rows="7" style="resize: none;"
-                                    id="combinumbers"></textarea>
-                            </td>
-                            <td rowspan="3" style="width: 50%;">
-                                <div id="zone1-result" class="overflow-auto">
-                                    <span class="bg-light bg-gradient d-flex justify-content-center text-dark mb-1"
-                                        style="text-align: center;">結果</span>
-                                    <ul class="list-group">
-                                        <!-- <li class="list-group-item list-group-item-action">An item</li> -->
-                                    </ul>
+        <div class="row border rounded mb-5 p-1">
+            <div class="accordion p-0" id="accordionExample">
+                <div class="accordion-item border-0">
+                    <span class="d-block p-0 bg-info text-dark subtitle rounded fs-2 accordion-header text-center"
+                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne" id="headingOne">模式一</span>
+                    <div id="collapseOne" class="accordion-collapse collapse show mt-1" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body p-0">
+                            <table class="table table-borderless p-0 m-0" id="zone1-table">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" style="width: 50%;" class="position-relative">
+                                            <textarea class="form-control" rows="7" style="resize: none;"
+                                                id="combinumbers" placeholder="輸入數字(逗號分隔)"></textarea>
+                                            <!-- <div class="invalid-tooltip">
+                                                    必須輸入需要隨機組合的數字
+                                                </div> -->
+                                        </td>
+                                        <td rowspan="4" style="width: 50%;" class="p-0">
+                                            <div id="zone1-result" class="overflow-auto">
+                                                <span
+                                                    class="bg-light bg-gradient d-flex justify-content-center text-dark mb-1"
+                                                    style="text-align: center;" id="result-bar">結果</span>
+                                                <!-- <ul class="list-group">
+                                                    
+                                                </ul> -->
+                                                <div class="list-group">
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    主要數字<i class="bi bi-question-circle-fill ps-2"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="主要數字必定會出現在每一組"></i>
+                                                </span>
+                                                <input type="text" class="form-control" placeholder="(選填)"
+                                                    id="main-number">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 25%;">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control text-center" value=1 min=1
+                                                    id="nofcombi">
+                                                <span class="input-group-text">個為一組</span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 25%;">
+                                            <div class="input-group">
+                                                <span class="input-group-text">產生幾組</span>
+                                                <input type="number" class="form-control text-center" value=1 min=1
+                                                    id="countcombi">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-grid">
+                                                <button class="btn btn-warning" type="button"
+                                                    onclick="generateSets()">產生</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-grid">
+                                                <button class="btn btn-danger" type="button"
+                                                    onclick="clearInputs()">清除</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 隨機2 -->
+        <div class="row border rounded mb-3 p-1">
+
+            <div class="accordion p-0" id="accordionExample2">
+                <div class="accordion-item border-0">
+                    <span class="d-block p-0 bg-info text-dark subtitle rounded fs-2 accordion-header text-center"
+                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true"
+                        aria-controls="collapseTwo" id="headingTwo">模式二</span>
+                    <div id="collapseTwo" class="accordion-collapse collapse show mt-1" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample2">
+                        <div class="accordion-body p-0">
+                            <div class="p-0 sticky-top mb-1">
+                                <!-- <span
+                                    class="d-block p-0 bg-info text-dark subtitle rounded mb-1 fs-2 text-center">模式二</span> -->
+                                <div class="row">
+                                    <div class="col pe-0">
+                                        <div class="d-grid">
+                                            <button class="btn btn-warning" type="button"
+                                                onclick="generateZone2Sets()">產生</button>
+                                        </div>
+                                    </div>
+                                    <div class="col ps-1 pe-0">
+                                        <div class="d-grid">
+                                            <button class="btn btn-danger" type="button" onclick="clearZone2Inputs()"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="保留所有列，清除輸入及結果">清除所有輸入/結果</button>
+                                        </div>
+                                    </div>
+                                    <div class="col ps-1">
+                                        <div class="d-grid">
+                                            <button class="btn btn-secondary" type="button"
+                                                onclick="removeZone2Elements()" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" title="刪除所有新增的列至1列">清除所有列</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 25%;">
-                                <div class="input-group">
-                                    <input type="number" class="form-control text-center" value=1 min=1 max=6
-                                        id="nofcombi">
-                                    <span class="input-group-text">個為一組</span>
+                            </div>
+                            <div id="zone2">
+                                <div class="row rounded m-0 zone2-element">
+                                    <div class="position-relative p-0">
+                                        <span class="position-absolute badge bg-light text-dark zone2-counter"
+                                            style="transform: translateX(-100%);">
+                                            # 1
+                                        </span>
+                                        <table class="table table-borderless zone2-table mb-1">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 50%;" colspan="2">
+                                                        <div class="input-group" style="height: 5rem;">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="輸入數字(逗號分隔)">
+                                                        </div>
+                                                    </td>
+                                                    <td rowspan="2">
+                                                        <div class="overflow-auto" style="height: 8rem;">
+                                                            <!-- <ul class="list-group result">
+                                                            </ul> -->
+                                                            <div class="list-group result">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 25%;">
+                                                        <div class="input-group" style="height: 3rem;">
+                                                            <input type="number" class="form-control text-center"
+                                                                value=1 min=1>
+                                                            <span class="input-group-text">個為一組</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group" style="height: 3rem;">
+                                                            <span class="input-group-text">產生幾組</span>
+                                                            <input type="number" class="form-control text-center"
+                                                                value=1 min=1>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="zone2-badge position-absolute top-0 start-100">
+                                            <button class="btn badge rounded-pill bg-primary add-btn"
+                                                onclick="addZone2Element(this)" title="新增項目">
+                                                <i class="bi bi-plus-circle-dotted"></i>
+                                            </button>
+                                            <button class="btn badge rounded-pill bg-danger del-btn"
+                                                onclick="removeZone2Element(this)" title="刪除此項目">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                            <td style="width: 25%;">
-                                <div class="input-group">
-                                    <span class="input-group-text">產生幾組</span>
-                                    <input type="number" class="form-control text-center" value=1 min=1 id="countcombi">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-grid">
-                                    <button class="btn btn-warning" type="button" onclick="generateSets()">產生</button>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-grid">
-                                    <button class="btn btn-danger" type="button" onclick="clearInputs()">清除</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
 
+    <!-- 超出範圍的 Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="staticBackdropLabel">
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="custom-alert-body"></div>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+
+    <script src="assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        var alertModal;
+
         document.addEventListener('DOMContentLoaded', function () {
             initZoneOneHieght();
+
+            //BS Tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            //註冊Modal
+            alertModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+                keyboard: false
+            });
+
+            // 顯示版本號
+            // window.electronAPI.getAppVersion().then(version => {
+            //     // const version_dis = document.getElementById('app-version');
+            //     if (version) {
+            //         // version_dis.innerText = `v${version}`;
+            //         // version_dis.classList.remove('d-none');
+            //         // alert(version);
+            //         document.title = document.title + ` v${version}`;
+            //     }
+            // });
+            const version = document.querySelector('meta[name="version"]').getAttribute('content');
+            document.title = document.title + ` v${version}`;
         });
 
         function initZoneOneHieght() {
-            const zone1_table_body = document.querySelector('#zone1-table > tbody');
-            const txtAreaHeight = zone1_table_body.querySelector('textarea').offsetHeight;
-            const inputHeight = zone1_table_body.querySelector('input').offsetHeight;
-            const btnHeight = zone1_table_body.querySelector('button').offsetHeight;
-            zone1_table_body.querySelector('#zone1-result').style.height = (txtAreaHeight + inputHeight + btnHeight) + 'px';
+            const table = document.querySelector('#zone1-table > tbody');
+            const table_height = table.clientHeight;
+            const result = document.getElementById('zone1-result');
+            result.style.height = table_height + 'px';
+        }
+
+        function addZone2Element(btn) {
+            const zone2 = document.getElementById('zone2');
+            let zone2Element = findZone2Element(btn);
+            const clone = zone2Element.cloneNode(true);
+            //清空值
+            const values_text = clone.querySelectorAll('.zone2-table input[type="text"]');
+            values_text.forEach(value => value.value = "");
+            const values_number = clone.querySelectorAll('.zone2-table input[type="number"]');
+            values_number.forEach(value => value.value = 1);
+            //清空結果
+            clone.querySelector('.result').innerHTML = '';
+
+            zone2.appendChild(clone);
+            replaceZone2Counter();
+        }
+
+        function removeZone2Element(btn) {
+            let zone2Element = findZone2Element(btn);
+            zone2Element.remove();
+            replaceZone2Counter();
+        }
+
+        function findZone2Element(obj) {
+            let parent = obj.parentElement;
+            while (parent) {
+                if (parent.matches('.zone2-element'))
+                    break;
+                parent = parent.parentElement;
+            }
+            return parent;
+        }
+
+        //重新計算zone2-counter
+        function replaceZone2Counter() {
+            const counter = document.querySelectorAll('.zone2-counter');
+            for (let i = 0; i < counter.length; i++)
+                counter[i].innerText = '# ' + (i + 1);
         }
 
         function generateSets() {
-            const textarea = document.getElementById('combinumbers');
+            const result = document.getElementById('zone1-result').querySelector('.list-group');
+            const result_bar = document.getElementById('result-bar');
+            result.innerHTML = ''; //清空結果
+            result_bar.innerText = '結果';
+
+
+            const textarea = document.getElementById('combinumbers'); //輸入的數字群            
             const lines = textarea.value.trim().split('\n');
+            const main_number = document.getElementById('main-number').value.trim();//主要數字
             const sets = [];
             const numberOfSetsInput = document.getElementById('countcombi').value;
             const numberOfSets = parseInt(numberOfSetsInput); // 生成的組數
             const lineOfSetsInput = document.getElementById('nofcombi').value;
-            const lineOfSets = parseInt(lineOfSetsInput); // 選取的行數
+            const lineOfSets = parseInt(lineOfSetsInput); // 幾個為一組
+            let mainNumberLength = 0;
+            if (main_number.length != 0)
+                mainNumberLength = main_number.split(',').length;
 
+            //防呆
+            const length = textarea.value.length; //輸入數字群檢查
+            if (length == 0) {
+                showCustomAlert('[模式一] 無效輸入', '請輸入需要隨機產生的數字群。');
+                return;
+            }
+            if (mainNumberLength >= lineOfSets && mainNumberLength > 0) { //檢查主要數字是否大於每組數量
+                showCustomAlert('[模式一] 無效輸入', '主要數字的數量需小於每一組的數量。');
+                return;
+            }
+            if (lineOfSets > (lines.length + 1)) { //檢查幾個為一組是否超出可生成
+                showCustomAlert('[模式一] 無效輸入', '幾個為一組的數字量超出每組可生成最低數字量。');
+                return;
+            }
+
+
+            let outerDeadLine = 0;
+            //生成幾組
             while (sets.length < numberOfSets) {
-                // 隨機選取X行
-                const selectedLines = [];
-                while (selectedLines.length < lineOfSets) {
-                    const randomLine = getRandomElement(lines);
-                    if (!selectedLines.includes(randomLine)) {
-                        selectedLines.push(randomLine);
-                    }
+                outerDeadLine++;
+
+                //複製數字群陣列
+                const copyFromLines = [];
+                lines.forEach(line => { copyFromLines.push(line.split(',')); });
+
+                const selectedNumbers = []; //選取的數字
+
+                if (mainNumberLength > 0) {
+                    main_number.split(',').forEach(n => selectedNumbers.push(n));
+                    // selectedNumbers.sort((a, b) => parseInt(a) - parseInt(b));
                 }
 
-                // 每行隨機選取一個數字
-                const randomNumbers = selectedLines.map(line => {
-                    const numbers = line.split(',');
-                    return parseInt(getRandomElement(numbers), 10);
-                });
+                let innerDeadLine = 0;
+                let tempIndex = []; //暫存index
+                let repeat = false; //是否重複抽
+                while (selectedNumbers.length < lineOfSets) {
+                    innerDeadLine++;
+                    if (innerDeadLine > 100000)
+                        break;
 
-                // 將數字組合遞增排序
-                randomNumbers.sort((a, b) => a - b);
+                    const rndIndex = Math.floor(Math.random() * copyFromLines.length);       //抽第幾行
+                    if (tempIndex.includes(rndIndex) && repeat) continue;
+                    if (copyFromLines[rndIndex].length == 0) continue;             //如果抽到的行數沒有數字則跳過
+                    const rnd = getRandomElement(copyFromLines[rndIndex]);                   //抽該行的一個數字
+                    copyFromLines[rndIndex].splice(copyFromLines[rndIndex].indexOf(rnd), 1); //將該數字刪掉
+                    selectedNumbers.push(rnd);
+                    if (tempIndex.includes(rndIndex)) repeat = true;
+                    tempIndex.push(rndIndex);
+                    innerDeadLine = 0;
+                }
 
-                // 確保新組合與現有組合最多重複2個數字
-                if (hasLessThanOrEqualToTwoDuplicates(randomNumbers, sets)) {
-                    sets.push(randomNumbers);
+                //排序數字
+                selectedNumbers.sort((a, b) => parseInt(a) - parseInt(b));
+
+                if (hasLessThanOrEqualToTwoDuplicates(selectedNumbers, sets)) {
+                    sets.push(selectedNumbers);
+                    outerDeadLine = 0;
+                }
+
+                if (outerDeadLine > 100000 || innerDeadLine > 100000) {
+                    showCustomAlert('[模式一] 超出範圍', '無法生成更多組合，請重新調整配置。');
+                    console.log('outer:' + outerDeadLine + ', inner: ' + innerDeadLine);
+                    break;
                 }
             }
 
+            function getRandomElement(arr) {
+                const rnd = arr[Math.floor(Math.random() * arr.length)];
+                return rnd;
+            }
+
+            function hasLessThanOrEqualToTwoDuplicates(arr, sets) {
+                return sets.every(set => {
+                    const commonElements = arr.filter(num => set.includes(num));
+                    return commonElements.length <= 2;
+                });
+            }
+
             // 輸出結果
-            const result = document.getElementById('zone1-result').querySelector('.list-group');
-            result.innerHTML = ''; //清空結果
             //插入li
-            sets.map(set => set.join(',')).forEach(li => {
-                result.innerHTML += `<li class="list-group-item list-group-item-action">${li}</li>`;
+            sets.map(set => set.join(' , ')).forEach(li => {
+                result.innerHTML += `<label class="list-group-item list-group-item-action">
+    <input class="form-check-input me-1" type="checkbox" value="">
+    ${li}
+  </label>`;
             });
-
-            // document.getElementById('output').textContent = sets.map(set => set.join(',')).join('\n');
-            console.log(sets.map(set => set.join(' , ')));
-        }
-
-        function getRandomElement(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function hasLessThanOrEqualToTwoDuplicates(arr, sets) {
-            return sets.every(set => {
-                const commonElements = arr.filter(num => set.includes(num));
-                return commonElements.length <= 2;
-            });
+            //顯示結果數量
+            result_bar.innerText = `結果（${sets.length}組）`;
         }
 
         function clearInputs() {
-            if (!confirm('確定清除？')) return;
+            // if (!confirm('確定清除？')) return;
 
             //清空所有inputs
             const numberOfSetsInput = document.getElementById('countcombi');
             const lineOfSetsInput = document.getElementById('nofcombi');
             const textarea = document.getElementById('combinumbers');
-            textarea.value = '';
+            const mainNumber = document.getElementById('main-number')
+            const result_bar = document.getElementById('result-bar');
+            textarea.value = "";
+            mainNumber.value = '';
             numberOfSetsInput.value = lineOfSetsInput.value = 1;
             //清空結果
             const result = document.getElementById('zone1-result').querySelector('.list-group');
             result.innerHTML = '';
+            result_bar.innerText = '結果';
+        }
 
+        function generateZone2Sets() {
+            const zone2Elements = document.querySelectorAll('.zone2-element'); //所有zone2的列
+            const issues_0 = []; //沒輸入數字的編號
+            const issues_1 = []; //幾個為一組有問題的編號
+            const issues_2 = []; //產生組數大於所有組合數編號
+            //迭代
+            zone2Elements.forEach(ele => {
+                const inputs = ele.querySelectorAll('input:not([type="checkbox"])'); //取得所有input
+                const inputSets = inputs[0].value.trim(); // 輸入的數字群
+                const numberOfSets = inputs[1].value; //幾個為一組
+                const countOfSets = inputs[2].value; //產生幾組
+                const result = ele.querySelector('.result'); //結果區域
+                const tag = ele.querySelector('.zone2-counter').innerText;
+
+                //先檢查是否有輸入數字
+                if (inputSets.length == 0) {
+                    issues_0.push(tag);
+                    return;
+                }
+                //檢查幾個為一組的問題
+                if (inputSets.split(',').length < numberOfSets) {
+                    issues_1.push(tag);
+                    return;
+                }
+
+                const combiSets = generateCombi(inputSets.split(','), numberOfSets); //取得所有組合
+                if (combiSets.length >= countOfSets) { //所有組合數需大於產生組數
+                    const resultSets = randomCombi(combiSets, countOfSets); //結果
+                    //插入結果
+                    result.innerText = ``;
+                    console.log(resultSets.length);
+                    resultSets.forEach(rs => {
+                        const text = rs.join(' , ');
+                        // result.innerHTML += `<li class="list-group-item list-group-item-action pt-1 pb-1">${text}</li>`;
+                        result.innerHTML += `
+                            <label class="list-group-item list-group-item-action pt-1 pb-1">
+                                <input class="form-check-input me-1" type="checkbox" value="">
+                                ${text}
+                            </label>
+                        `;
+                    });
+                } else {
+                    //插入結果
+                    if (combiSets.length > 0) {
+                        result.innerHTML = `456`;
+                        combiSets.forEach(rs => {
+                            const text = rs.join(' , ');
+                            // result.innerHTML += `<li class="list-group-item list-group-item-action pt-1 pb-1">${text}</li>`;
+                            result.innerHTML += `
+                            <label class="list-group-item list-group-item-action pt-1 pb-1">
+                                <input class="form-check-input me-1" type="checkbox" value="">
+                                ${text}
+                            </label>
+                            `;
+                        });
+                    }
+                    issues_2.push(tag);
+                }
+            });
+
+            //回報問題
+            if (issues_0.length > 0 || issues_1.length > 0 || issues_2.length > 0) {
+                const msg = alertMessage(issues_0, issues_1, issues_2);
+                showCustomAlert('[模式二] 輸入有誤', msg);
+            }
+
+            function generateCombi(arr, sets) {
+                const combinations = [];
+                const tempCombination = [];
+
+                function backtrack(startIndex) {
+                    if (tempCombination.length == sets) {
+                        combinations.push(tempCombination.slice());
+                        return;
+                    }
+
+                    for (let i = startIndex; i < arr.length; i++) {
+                        tempCombination.push(arr[i]);
+                        backtrack(i + 1);
+                        tempCombination.pop();
+                    }
+                }
+
+                backtrack(0);
+                return combinations;
+            }
+
+            function randomCombi(arr, count) {
+                const cloneArr = Array.from(arr);
+                const result = [];
+                while (result.length < count) {
+                    const index = Math.floor(Math.random() * cloneArr.length);
+                    const draw = cloneArr[index];
+                    result.push(draw);
+                    cloneArr.splice(index, 1);
+                }
+                return result;
+            }
+
+            function alertMessage(is1, is2, is3) {
+                const dl = document.createElement('dl');
+                //先檢查是否有輸入數字
+                if (is1.length > 0) {
+                    dl.innerHTML += '<dt class="text-info">以下編號沒有輸入需要產生的數字:</dt>';
+                    dl.innerHTML += `<dd>${is1.join(' , ')}</dd>`;
+                }
+                if (is2.length > 0) {
+                    dl.innerHTML += '<dt class="text-info">以下編號輸入的數字量小於需要組合的數字量:</dt>';
+                    dl.innerHTML += `<dd>${is2.join(' , ')}</dd>`;
+                }
+                if (is3.length > 0) {
+                    dl.innerHTML += '<dt class="text-info">以下編號能產生的組數不足:</dt>';
+                    dl.innerHTML += `<dd>${is3.join(' , ')}</dd>`;
+                }
+                return dl.outerHTML;
+            }
+        }
+
+        function clearZone2Inputs() {
+            const texts = document.querySelectorAll('#zone2 input[type="text"]');
+            const numbers = document.querySelectorAll('#zone2 input[type="number"]');
+            const result = document.querySelectorAll('#zone2 .result');
+            texts.forEach(txt => txt.value = '');
+            numbers.forEach(n => n.value = 1);
+            result.forEach(rs => rs.innerHTML = '');
+        }
+
+        function removeZone2Elements() {
+            const eles = document.querySelectorAll('.zone2-element');
+            for (let i = 1; i < eles.length; i++)
+                eles[i].remove();
+            clearZone2Inputs();
+        }
+
+        function showCustomAlert(title, msg) {
+            const alertBody = document.getElementById('custom-alert-body');
+            alertBody.innerHTML = msg;
+            const alertTitle = document.getElementById('staticBackdropLabel');
+            alertTitle.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>${title}`;
+            alertModal.show();
         }
     </script>
 </body>
