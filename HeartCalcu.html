@@ -16,45 +16,86 @@
             font-weight: 400;
             font-style: normal;
         }
+
+        .video-container {
+            position: relative;
+            height: 100vh;
+            /* 全螢幕高度，可自行調整 */
+            overflow: hidden;
+            /* 關鍵：裁切影片，不產生滾動條 */
+        }
+
+        /* 影片本身 */
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 重點：等比例裁切 */
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        /* 前景內容 */
+        .video-container .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            top: -30%;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row mt-3">
-            <div class="col">
-                <div class="input-group mt-1 mb-1">
-                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="current-heart">目前心力</span>
-                    <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
-                        aria-describedby="current-heart" id="currentHeart">
+    <div class="video-container container-fluid d-flex justify-content-center align-items-center">
+
+        <video src="https://yysls-build-na.fp.ps.easebar.com/file/6909676a8e8ca9de2eb191dcrzdPj9Pe03" class="bg-video"
+            loop="" muted="" autoplay="" preload=""></video>
+
+        <div class="container border shadow border-secondary">
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="input-group mt-1 mb-1">
+                        <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="current-heart">目前心力</span>
+                        <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular"
+                            aria-label="Sizing example input" aria-describedby="current-heart" id="currentHeart">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-xl-6 col-sm-12">
-                <div class="input-group mt-1 mb-3">
-                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="target-heart">目標心力</span>
-                    <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
-                        aria-describedby="target-heart" id="targetHeart" value="490">
+            <div class="row mt-3">
+                <div class="col-xl-6 col-sm-12">
+                    <div class="input-group mt-1 mb-3">
+                        <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="target-heart">目標心力</span>
+                        <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular"
+                            aria-label="Sizing example input" aria-describedby="target-heart" id="targetHeart"
+                            value="490">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-sm-12">
+                    <div class="input-group mt-1 mb-3">
+                        <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="date-picker">目標時間</span>
+                        <input type="datetime-local" class="form-control fs-2 lxgw-wenkai-tc-regular"
+                            aria-label="Sizing example input" aria-describedby="date-picker" id="datePicker">
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-sm-12">
-                <div class="input-group mt-1 mb-3">
-                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="date-picker">目標時間</span>
-                    <input type="datetime-local" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
-                        aria-describedby="date-picker" id="datePicker">
+            <div class="row">
+                <div class="col mt-1 mb-3">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary lxgw-wenkai-tc-regular btn-lg fs-2" type="button">計算</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mt-1 mb-3">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary lxgw-wenkai-tc-regular btn-lg fs-2" type="button">計算</button>
-                </div>
-            </div>
-            <div class="col mt-1 mb-3">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-danger lxgw-wenkai-tc-regular btn-lg fs-2" type="button">重置</button>
+                <div class="col mt-1 mb-3">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-danger lxgw-wenkai-tc-regular btn-lg fs-2" type="button">重置</button>
+                    </div>
                 </div>
             </div>
         </div>
