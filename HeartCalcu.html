@@ -7,44 +7,54 @@
     <title>心力計算器</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+    <style>
+        .lxgw-wenkai-tc-regular {
+            font-family: "LXGW WenKai TC", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row mt-3">
-            <div class="col mt-1 mb-1">
-                <div class="input-group">
-                    <span class="input-group-text fs-2" id="current-heart">目前心力</span>
-                    <input type="text" class="form-control fs-2" aria-label="Sizing example input"
+            <div class="col">
+                <div class="input-group mt-1 mb-1">
+                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="current-heart">目前心力</span>
+                    <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
                         aria-describedby="current-heart" id="currentHeart">
                 </div>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col mt-1 mb-1">
-                <div class="input-group">
-                    <span class="input-group-text fs-2" id="target-heart">目標心力</span>
-                    <input type="text" class="form-control fs-2" aria-label="Sizing example input"
-                        aria-describedby="target-heart" id="targetHeart">
+            <div class="col-xl-6 col-sm-12">
+                <div class="input-group mt-1 mb-3">
+                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="target-heart">目標心力</span>
+                    <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
+                        aria-describedby="target-heart" id="targetHeart" value="490">
                 </div>
             </div>
-            <div class="col mt-1 mb-1">
-                <div class="input-group">
-                    <span class="input-group-text fs-2" id="date-picker">目標時間</span>
-                    <input type="datetime-local" class="form-control fs-2" aria-label="Sizing example input"
+            <div class="col-xl-6 col-sm-12">
+                <div class="input-group mt-1 mb-3">
+                    <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="date-picker">目標時間</span>
+                    <input type="datetime-local" class="form-control fs-2 lxgw-wenkai-tc-regular" aria-label="Sizing example input"
                         aria-describedby="date-picker" id="datePicker">
                 </div>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col mt-1 mb-1">
+        <div class="row">
+            <div class="col mt-1 mb-3">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-lg fs-2" type="button">計算</button>
+                    <button class="btn btn-primary lxgw-wenkai-tc-regular btn-lg fs-2" type="button">計算</button>
                 </div>
             </div>
-            <div class="col mt-1 mb-1">
+            <div class="col mt-1 mb-3">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-danger btn-lg fs-2" type="button">重置</button>
+                    <button class="btn btn-danger lxgw-wenkai-tc-regular btn-lg fs-2" type="button">重置</button>
                 </div>
             </div>
         </div>
@@ -116,12 +126,11 @@
 
             resetButton.addEventListener('click', function () {
                 document.getElementById('currentHeart').value = '';
-                document.getElementById('targetHeart').value = '';
+                document.getElementById('targetHeart').value = '490';
                 document.getElementById('datePicker').value = '';
             });
         });
     </script>
 </body>
-
 
 </html>
