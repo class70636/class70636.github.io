@@ -49,7 +49,6 @@
             background-color: rgba(255, 255, 255, 0.25);
             border-radius: 15px;
         }
-
     </style>
 </head>
 
@@ -65,7 +64,7 @@
                     <div class="input-group mt-1 mb-1">
                         <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="current-heart">目前心力</span>
                         <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular"
-                            aria-label="Sizing example input" aria-describedby="current-heart" id="currentHeart">
+                            aria-label="Sizing example input" aria-describedby="current-heart" id="currentHeart" inputmode="numeric">
                     </div>
                 </div>
             </div>
@@ -75,7 +74,7 @@
                         <span class="input-group-text fs-2 lxgw-wenkai-tc-regular" id="target-heart">目標心力</span>
                         <input type="text" class="form-control fs-2 lxgw-wenkai-tc-regular"
                             aria-label="Sizing example input" aria-describedby="target-heart" id="targetHeart"
-                            value="490">
+                            value="490" inputmode="numeric">
                     </div>
                 </div>
                 <div class="col-xl-6 col-sm-12">
@@ -126,8 +125,15 @@
                     const diffTime = diff * 9; //分鐘
                     const day_list = ['日', '一', '二', '三', '四', '五', '六'];
                     const targetDate = new Date(now.getTime() + diffTime * 60000);
+                    const targetDateFormatted = targetDate.toLocaleString('zh-TW', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
                     const targetDay = day_list[targetDate.getDay()];
-                    alert(`到達目標心力 ${targetHeart} 需要 ${diffTime} 分鐘，到達時間為 ${targetDate.toLocaleString()} (${targetDay})`);
+                    alert(`到達目標心力 ${targetHeart} 需要 ${diffTime} 分鐘，到達時間約為 ${targetDateFormatted} (星期${targetDay})`);
                 } else if (currentHeart && !targetHeart && datePicker) {
                     const targetDate = new Date(datePicker);
                     const timeDiff = targetDate - now;
@@ -142,10 +148,21 @@
                     const diffMinutes = Math.ceil(timeDiff / (1000 * 60));
                     const neededHeart = Math.ceil(diffMinutes / 9);
                     const currentHeartNeeded = targetHeart - neededHeart;
-                    const msg = currentHeartNeeded < 0 ? '心力充足無虞' : '需要目前擁有 ' + currentHeartNeeded + ' 心力';
+                    const msg = currentHeartNeeded < 0 ? '心力充足無虞' : '目前需要擁有至少 ' + currentHeartNeeded + ' 心力';
                     alert(`${msg}`);
                 } else if (currentHeart && targetHeart && datePicker) {
-                    alert('全寫不知道要算甚麼😑');
+                    // alert('全寫不知道要算甚麼😑');
+                    const targetDate = new Date(datePicker);
+                    const timeDiff = targetDate - now;
+                    const diffMinutes = Math.ceil(timeDiff / (1000 * 60));
+                    const neededHeart = Math.ceil(diffMinutes / 9);
+                    const currentHeartNeeded = targetHeart - neededHeart;
+                    const currentHeartDiff = currentHeart - currentHeartNeeded;
+                    if (currentHeartDiff >= 0) {
+                        alert(`目前心力 ${currentHeart} 可在目標時間內達成 ${targetHeart}，在此期間可再消耗 ${currentHeartDiff} 心力`);
+                    } else {
+                        alert(`目前心力 ${currentHeart} 無法在目標時間內達成 ${targetHeart}，還差 ${-currentHeartDiff} 心力`);
+                    }
                 }
 
                 function check() {
